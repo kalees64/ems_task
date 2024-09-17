@@ -23,6 +23,7 @@ import {
   DialogTrigger,
   DialogFooter,
   DialogClose,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import DataContext from "../../../../context/DataContext";
@@ -118,7 +119,7 @@ const Employee = () => {
   const startUp = async () => {
     await findUser();
     await getAtt();
-    setValues(user);
+    // setValues(user);
   };
   useEffect(() => {
     startUp();
@@ -219,6 +220,9 @@ const Employee = () => {
             <DialogContent className="bg-white">
               <DialogHeader>
                 <DialogTitle>Update Employee</DialogTitle>
+                <DialogDescription className="hidden">
+                  Edit Form
+                </DialogDescription>
               </DialogHeader>
               <form
                 onSubmit={(e) => {
@@ -230,9 +234,7 @@ const Employee = () => {
                   <Input
                     type="text"
                     value={uName}
-                    onChange={(e) => {
-                      setuName(e.target.value);
-                    }}
+                    onChange={(e) => setuName(e.target.value)}
                   />
                 </div>
                 <div>
@@ -240,9 +242,7 @@ const Employee = () => {
                   <Input
                     type="email"
                     value={uEmail}
-                    onChange={(e) => {
-                      setuEmail(e.target.value);
-                    }}
+                    onChange={(e) => setuEmail(e.target.value)}
                   />
                 </div>
                 <div>
@@ -250,14 +250,19 @@ const Employee = () => {
                   <Input
                     type="tel"
                     value={uPhone}
-                    onChange={(e) => {
-                      setuPhone(e.target.value);
-                    }}
+                    onChange={(e) => setuPhone(e.target.value)}
                   />
                 </div>
                 <DialogFooter className="pt-3">
                   <DialogClose asChild>
-                    <Button type="submit">Update</Button>
+                    <Button
+                      type="submit"
+                      // onClick={async () => {
+                      //   await findUser();
+                      // }}
+                    >
+                      Update
+                    </Button>
                   </DialogClose>
                 </DialogFooter>
               </form>
