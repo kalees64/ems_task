@@ -8,7 +8,7 @@ import Navbar from "../../../components/Navbar";
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
   //Get Data from context API
-  const { fetchData, API_URI } = useContext(DataContext);
+  const { fetchData } = useContext(DataContext);
 
   //Manage All Employe Details state
   const [allEmps, setAllEmps] = useState([]);
@@ -21,7 +21,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     getAllEmps();
-  }, []);
+  });
 
   return (
     <main className="w-full h-screen overflow-hidden">

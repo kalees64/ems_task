@@ -41,7 +41,7 @@ const Employee = () => {
   const { id } = useParams();
 
   //Manage user details - states
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<any>({});
   const [p, setP] = useState("");
   const [l, setL] = useState("");
   const [sl, setSl] = useState("");
@@ -122,7 +122,7 @@ const Employee = () => {
   };
   useEffect(() => {
     startUp();
-  }, [updateState]);
+  });
   return (
     <div className="p-6">
       {/* Logout Button */}

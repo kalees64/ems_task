@@ -42,8 +42,8 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
     if (empid === "null" || att === "null" || !empid || !empName || !att) {
       return alert("Fill out all the fields");
     }
-    let allAtt = await fetchAtt();
-    let userAtt = allAtt.find(
+    const allAtt = await fetchAtt();
+    const userAtt = allAtt.find(
       (att: any) =>
         att.emp_id === empid && att.date === format(attDate, "dd/MM/yyyy")
     );

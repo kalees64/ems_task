@@ -28,19 +28,13 @@ const LeaveMails = () => {
   const [mail, setMail] = useState({});
 
   //Get Data from context API
-  const {
-    fetchMails,
-    handleAprove,
-    reject,
-    setReject,
-    fetchOneMail,
-    handleReject,
-  } = useContext(DataContext);
+  const { fetchMails, handleAprove, fetchOneMail, handleReject } =
+    useContext(DataContext);
 
   //Get Mails function
   const getMails = async () => {
     const res = await fetchMails();
-    let res2 = res.reverse();
+    const res2 = res.reverse();
     setAllMails(res2);
     const newMails = res.filter((data: any) => data.new);
     setNewMails(newMails);
@@ -57,7 +51,7 @@ const LeaveMails = () => {
 
   useEffect(() => {
     getMails();
-  }, [allMails]);
+  });
   return (
     <section className="bg-white shadow-md rounded p-4">
       {newMails.length > 0 && (

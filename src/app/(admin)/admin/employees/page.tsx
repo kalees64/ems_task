@@ -11,7 +11,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -19,17 +18,14 @@ import { Icon } from "@iconify/react";
 import React, { useContext, useEffect, useState } from "react";
 import DataContext from "../../../../context/DataContext";
 
-const employees = () => {
+const Employees = () => {
   //Manage all users state
   const [allUsers, setAllUsers] = useState([]);
-  const [user, setUser] = useState({});
 
   //Get data from the context API
   const {
     fetchData,
     handleDelete,
-    updateState,
-    setUpdateState,
     fetchOneData,
     adminState,
     setAdminState,
@@ -59,13 +55,12 @@ const employees = () => {
   //Get one user function
   const getUser = async (id: string) => {
     const res = await fetchOneData(id);
-    setUser(res);
     return res;
   };
 
   useEffect(() => {
     getUsers();
-  }, [allUsers]);
+  });
   return (
     <section className="w-full p-3 px-6">
       <div className="w-full flex justify-between items-center">
@@ -191,4 +186,4 @@ const employees = () => {
   );
 };
 
-export default employees;
+export default Employees;

@@ -28,7 +28,7 @@ const Admin = () => {
 
   useEffect(() => {
     getUsers();
-  }, [allUsers, allAtt]);
+  });
   return (
     <section className="bg-white shadow-md rounded p-4">
       <h2 className="text-lg font-semibold mb-4">Employee Reports</h2>

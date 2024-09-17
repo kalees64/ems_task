@@ -20,14 +20,14 @@ const LeaveMails = () => {
   //Get all Mails function
   const getMails = async () => {
     const res = await fetchMails();
-    let res1 = res.filter((data: any) => !data.new);
-    let res2 = res1.reverse();
+    const res1 = res.filter((data: any) => !data.new);
+    const res2 = res1.reverse();
     setAllMails(res2);
   };
 
   useEffect(() => {
     getMails();
-  }, [allMails]);
+  });
   return (
     <section className="bg-white shadow-md rounded p-4">
       <div className="w-full flex justify-between items-center">

@@ -88,8 +88,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       setulPass("");
       return router.push("/admin");
     }
-    let allData = await fetchData();
-    let userData = allData.find(
+    const allData = await fetchData();
+    const userData = allData.find(
       (data: any) => data.phone === ulPhone && data.password === ulPass
     );
     setulPhone("");
@@ -130,8 +130,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   // Regiser / Add user Function
   const handleRegister = async (e: any) => {
     e.preventDefault();
-    let allData = await fetchData();
-    let userData = allData.find((data: any) => data.phone === phone);
+    const allData = await fetchData();
+    const userData = allData.find((data: any) => data.phone === phone);
     if (userData) {
       setName("");
       setEmail("");
@@ -177,10 +177,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   // Leave Mail Request Function
   const handelLeaveMail = async (e: any, user: any) => {
     e.preventDefault();
-    let allMails = await fetchMails();
-    let fromDate = format(from, "dd/MM/yyyy");
-    let toDate = format(to, "dd/MM/yyyy");
-    let userMail = allMails.find(
+    const allMails = await fetchMails();
+    const fromDate = format(from, "dd/MM/yyyy");
+    const toDate = format(to, "dd/MM/yyyy");
+    const userMail = allMails.find(
       (mail: any) => mail.leave_from === fromDate && mail.leave_to === toDate
     );
     if (userMail) {
@@ -191,7 +191,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         toast.error("This leave already applied");
       }, 100);
     }
-    let days = differenceInDays(new Date(to), new Date(from));
+    const days = differenceInDays(new Date(to), new Date(from));
     const res = await axios.post(`${API_URI}/leavemails`, {
       emp_id: user.id,
       name: user.name,

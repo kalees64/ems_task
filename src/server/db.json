@@ -2,7 +2,7 @@
   "employees": [
     {
       "id": "1",
-      "name": "Kaleeswaran",
+      "name": "Kaleeswaran V",
       "email": "vkalees64@gmail.com",
       "phone": "8248589198",
       "password": "646464"
@@ -19,6 +19,13 @@
       "name": "Arun V",
       "email": "arun@gmail.com",
       "phone": "2345678901",
+      "password": "646464"
+    },
+    {
+      "id": "287f",
+      "name": "Kajith",
+      "email": "kajith@gmail.com",
+      "phone": "7695930325",
       "password": "646464"
     }
   ],
@@ -64,6 +71,21 @@
       "created_date": "16/09/2024",
       "modified_date": "16/09/2024",
       "total_days": 7
+    },
+    {
+      "id": "3861",
+      "emp_id": "1",
+      "name": "Kaleeswaran",
+      "email": "vkalees64@gmail.com",
+      "leave_from": "18/09/2024",
+      "leave_to": "28/09/2024",
+      "reason": "Weekend Leave",
+      "new": false,
+      "created_date": "17/09/2024",
+      "modified_date": "17/09/2024",
+      "total_days": 10,
+      "status": false,
+      "r_reason": "No weekend"
     }
   ],
   "attendances": [
@@ -220,6 +242,20 @@
       "name": "Ram Kumar P",
       "date": "08/10/2024",
       "att": "payoff"
+    },
+    {
+      "id": "c108",
+      "emp_id": "287f",
+      "name": "Kajith",
+      "date": "17/09/2024",
+      "att": "pre"
+    },
+    {
+      "id": "35dd",
+      "emp_id": "287f",
+      "name": "Kajith",
+      "date": "25/09/2024",
+      "att": "present"
     }
   ]
 }
