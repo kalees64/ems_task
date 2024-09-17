@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useState } from "react";
 import { toast } from "sonner";
 
-const DataContext = createContext({});
+const DataContext = createContext<any>({});
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   // API UTL
@@ -130,7 +130,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   // Regiser / Add user Function
   const handleRegister = async (e: any) => {
     e.preventDefault();
-    const allUsers = await fetchData();
+    let allData = await fetchData();
+    let userData = allData.find((data: any) => data.phone === phone);
+    if (userData) {
+      setName("");
+      setEmail("");
+      setPhone("");
+      setPassword("");
+      return setTimeout(() => {
+        toast.error("Employee Already Found");
+      }, 100);
+    }
     const res = await axios.post(`${API_URI}/employees`, {
       name,
       email,
@@ -167,8 +177,20 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   // Leave Mail Request Function
   const handelLeaveMail = async (e: any, user: any) => {
     e.preventDefault();
+    let allMails = await fetchMails();
     let fromDate = format(from, "dd/MM/yyyy");
     let toDate = format(to, "dd/MM/yyyy");
+    let userMail = allMails.find(
+      (mail: any) => mail.leave_from === fromDate && mail.leave_to === toDate
+    );
+    if (userMail) {
+      setFrom("");
+      setTo("");
+      setReason("");
+      return setTimeout(() => {
+        toast.error("This leave already applied");
+      }, 100);
+    }
     let days = differenceInDays(new Date(to), new Date(from));
     const res = await axios.post(`${API_URI}/leavemails`, {
       emp_id: user.id,

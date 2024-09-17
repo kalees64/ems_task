@@ -27,7 +27,7 @@ import {
 
 const Navbar = ({ allEmps }: { allEmps: any }) => {
   //Get data from the context API
-  const { fetchOneData, API_URI, router, adminState, setAdminState } =
+  const { fetchOneData, API_URI, router, adminState, setAdminState, fetchAtt } =
     useContext(DataContext);
 
   //States for employee manual attendace form
@@ -41,6 +41,20 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
     e.preventDefault();
     if (empid === "null" || att === "null" || !empid || !empName || !att) {
       return alert("Fill out all the fields");
+    }
+    let allAtt = await fetchAtt();
+    let userAtt = allAtt.find(
+      (att: any) =>
+        att.emp_id === empid && att.date === format(attDate, "dd/MM/yyyy")
+    );
+    if (userAtt) {
+      setEmpName("");
+      setEmpid("");
+      setAtt("");
+      setAttDate("");
+      return setTimeout(() => {
+        toast.error("Already Marked");
+      }, 100);
     }
     const newAtt = {
       emp_id: empid,
