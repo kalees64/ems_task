@@ -1,0 +1,225 @@
+{
+  "employees": [
+    {
+      "id": "1",
+      "name": "Kaleeswaran",
+      "email": "vkalees64@gmail.com",
+      "phone": "8248589198",
+      "password": "646464"
+    },
+    {
+      "id": "388d",
+      "name": "Ram Kumar",
+      "email": "ram@gmail.com",
+      "phone": "1234567890",
+      "password": "123456"
+    },
+    {
+      "id": "ce1e",
+      "name": "Arun V",
+      "email": "arun@gmail.com",
+      "phone": "2345678901",
+      "password": "646464"
+    }
+  ],
+  "leavemails": [
+    {
+      "id": "ccba",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "email": "vk64@gmail.com",
+      "leave_from": "14/09/2024",
+      "leave_to": "28/09/2024",
+      "reason": "Leave Application for attending the Marriage Function",
+      "new": false,
+      "created_date": "13/09/2024",
+      "modified_date": "16/09/2024",
+      "total_days": 14,
+      "status": false,
+      "r_reason": "Your holidays are done..."
+    },
+    {
+      "id": "6a59",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "email": "ram@gmail.com",
+      "leave_from": "27/09/2024",
+      "leave_to": "04/10/2024",
+      "reason": "Last Dance",
+      "new": false,
+      "created_date": "13/09/2024",
+      "modified_date": "16/09/2024",
+      "total_days": 7,
+      "status": true
+    },
+    {
+      "id": "f0df",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "email": "vkalees64@gmail.com",
+      "leave_from": "19/09/2024",
+      "leave_to": "26/09/2024",
+      "reason": "Leave for Festival\n",
+      "new": true,
+      "created_date": "16/09/2024",
+      "modified_date": "16/09/2024",
+      "total_days": 7
+    }
+  ],
+  "attendances": [
+    {
+      "id": "880c",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "13/09/2024",
+      "att": "present"
+    },
+    {
+      "id": "847c",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "13/09/2024",
+      "att": "present"
+    },
+    {
+      "id": "aeaa",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "14/09/2024",
+      "att": "leave"
+    },
+    {
+      "id": "fdcb",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "11/09/2024",
+      "att": "s_leave"
+    },
+    {
+      "id": "c76b",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "03/09/2024",
+      "att": "payoff"
+    },
+    {
+      "id": "d194",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "02/09/2024",
+      "att": "leave"
+    },
+    {
+      "id": "2f63",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "10/09/2024",
+      "att": "s_leave"
+    },
+    {
+      "id": "c57b",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "16/09/2024",
+      "att": "payoff"
+    },
+    {
+      "id": "c603",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "14/09/2024",
+      "att": "present"
+    },
+    {
+      "id": "c671",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "01/10/2024",
+      "att": "present"
+    },
+    {
+      "id": "cde7",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "25/09/2024",
+      "att": "s_leave"
+    },
+    {
+      "id": "de1c",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "02/10/2024",
+      "att": "pre"
+    },
+    {
+      "id": "069e",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "03/10/2024",
+      "att": "leave"
+    },
+    {
+      "id": "bdb3",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "01/10/2024",
+      "att": "payoff"
+    },
+    {
+      "id": "2cd2",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "11/10/2024",
+      "att": "s_leave"
+    },
+    {
+      "id": "e42c",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "08/10/2024",
+      "att": "s_leave"
+    },
+    {
+      "id": "e97f",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "26/09/2024",
+      "att": "leave"
+    },
+    {
+      "id": "ea6f",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "03/10/2024",
+      "att": "s_leave"
+    },
+    {
+      "id": "9f83",
+      "emp_id": "1",
+      "name": "Kaleeswaran V",
+      "date": "03/10/2024",
+      "att": "present"
+    },
+    {
+      "id": "71a7",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "10/10/2024",
+      "att": "payoff"
+    },
+    {
+      "id": "05de",
+      "emp_id": "ce1e",
+      "name": "Arun",
+      "date": "03/10/2024",
+      "att": "leave"
+    },
+    {
+      "id": "e091",
+      "emp_id": "388d",
+      "name": "Ram Kumar P",
+      "date": "08/10/2024",
+      "att": "payoff"
+    }
+  ]
+}
