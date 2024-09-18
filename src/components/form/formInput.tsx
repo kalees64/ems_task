@@ -7,7 +7,7 @@ type FormInputProbs = {
   value?: string | number;
   placeholder?: string;
   label?: string;
-  onChange?: (e: any | null) => void;
+  onChange?: (e: any) => void;
   min?: number;
   max?: number;
   minLength?: number;
@@ -47,7 +47,7 @@ const FormInput = (probs: FormInputProbs) => {
         required={required || true}
         placeholder={placeholder}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          onChange(e.target.value);
+          onChange?.(e.target.value);
         }}
       />
     </div>

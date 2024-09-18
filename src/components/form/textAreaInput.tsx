@@ -25,7 +25,7 @@ const TextAreaInput = (probs: FormInputProbs) => {
         required
         placeholder={placeholder}
         onChange={(e: any) => {
-          onChange(e.target.value);
+          onChange?.(e.target.value);
         }}
       />
     </div>
