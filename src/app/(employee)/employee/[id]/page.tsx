@@ -123,7 +123,7 @@ const Employee = () => {
   };
   useEffect(() => {
     startUp();
-  });
+  }, [findUser, getAtt]);
   return (
     <div className="p-6">
       {/* Logout Button */}
@@ -131,6 +131,7 @@ const Employee = () => {
         <h1 className="text-2xl font-bold">Employee Dashboard</h1>
         <Button
           onClick={() => {
+            localStorage.removeItem("token");
             router.push("/");
             setTimeout(() => {
               toast.info("Logged Out");

@@ -82,14 +82,12 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
     setAttDate("");
   };
   return (
-    <div className="flex items-center justify-between bg-gray-100 p-4 shadow-md">
-      <div>Admin Dashboard</div>
+    <div className="flex items-center justify-end bg-gray-100 p-4 shadow-md">
+      {/* <div>Admin Dashboard</div> */}
       <div className="space-x-4">
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="bg-blue-500 text-white px-4 py-2 rounded">
-              Employee Attendance
-            </Button>
+            <Button>Employee Attendance</Button>
           </DialogTrigger>
 
           <DialogContent className="bg-white">
@@ -183,8 +181,9 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
           </DialogContent>
         </Dialog>
         <Button
-          className="bg-green-500 text-white px-4 py-2 rounded"
+          // className="bg-green-500 text-white px-4 py-2 rounded"
           onClick={() => {
+            localStorage.removeItem("token");
             router.push("/");
             setTimeout(() => {
               toast.info("Logged Out");

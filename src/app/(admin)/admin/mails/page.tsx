@@ -51,7 +51,7 @@ const LeaveMails = () => {
 
   useEffect(() => {
     getMails();
-  });
+  }, [fetchOneMail]);
   return (
     <section className="bg-white shadow-md rounded p-4">
       {newMails.length > 0 && (

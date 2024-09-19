@@ -21,7 +21,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     getAllEmps();
-  });
+  }, [fetchData]);
 
   return (
     <main className="w-full h-screen overflow-hidden">

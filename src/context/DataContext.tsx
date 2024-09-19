@@ -9,8 +9,10 @@ const DataContext = createContext<any>({});
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   // API UTL
-  const API_URI = "http://localhost:3000";
+  const API_URI1 = "http://localhost:3000";
+  const API_URI = "https://apihrms.assaycr.in/v1";
   const router = useRouter();
+  // const token = localStorage.getItem("token");
 
   // User Login Details
   const [ulPhone, setulPhone] = useState("");
@@ -39,41 +41,47 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   //Data Fetching Function -- ALL User Data
   const fetchData = async () => {
-    const res = await axios.get(`${API_URI}/employees`);
+    const res = await axios.get(`https://apihrms.assaycr.in/v1/users`);
     // console.log(res.data);
-    return res.data;
+    return res.data.data;
   };
 
   //Data Fetching Function -- ALL User Data
   const fetchOneData = async (id: string) => {
-    const res = await axios.get(`${API_URI}/employees/${id}`);
+    const res = await axios.get(`https://apihrms.assaycr.in/v1/users/id/${id}`);
     // console.log(res.data);
-    return res.data;
+    return res.data.data;
   };
 
   // Leave Mail Fetching all
   const fetchMails = async () => {
-    const res = await axios.get(`${API_URI}/leavemails`);
+    const res = await axios.get(`${API_URI1}/leavemails`);
     // console.log(res.data);
     return res.data;
   };
 
   // Leave Mail Fetching one
   const fetchOneMail = async (id: string) => {
-    const res = await axios.get(`${API_URI}/leavemails/${id}`);
+    const res = await axios.get(`${API_URI1}/leavemails/${id}`);
     // console.log(res.data);
     return res.data;
   };
 
   // Attendance fetching all
   const fetchAtt: any = async () => {
-    const res = await axios.get(`${API_URI}/attendances`);
+    const res = await axios.get(`${API_URI1}/attendances`);
     return res.data;
   };
 
   // Attendance fetching One
   const fetchOneAtt = async (id: string) => {
-    const res = await axios.get(`${API_URI}/attendances/${id}`);
+    const res = await axios.get(`${API_URI1}/attendances/${id}`);
+    return res.data;
+  };
+
+  // Get All Holidays List
+  const fetchHolidays = async () => {
+    const res = await axios.get(`${API_URI1}/holidays`);
     return res.data;
   };
 
@@ -86,6 +94,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       }, 100);
       setulPhone("");
       setulPass("");
+      // localStorage.setItem("token", "admin123");
       return router.push("/admin");
     }
     const allData = await fetchData();
@@ -94,6 +103,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     );
     setulPhone("");
     setulPass("");
+    // localStorage.setItem("token", userData.id);
     if (!userData) {
       return setTimeout(() => {
         toast.error("No User Found");
@@ -116,7 +126,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       phone: uPhone ? uPhone : user.phone,
       password: user.password,
     };
-    const res = await axios.put(`${API_URI}/employees/${user.id}`, newData);
+    const res = await axios.put(`${API_URI}/users/id/${user.id}`, newData);
+
     // console.log(res);
     // setUpdateState(!updateState);
     setTimeout(() => {
@@ -129,6 +140,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   // Regiser / Add user Function
   const handleRegister = async (e: any) => {
+    // 4d837ae0-7ed2-49e4-bebd-cab50a79bde3
     e.preventDefault();
     const allData = await fetchData();
     const userData = allData.find((data: any) => data.phone === phone);
@@ -141,11 +153,12 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         toast.error("Employee Already Found");
       }, 100);
     }
-    const res = await axios.post(`${API_URI}/employees`, {
+    const res = await axios.post(`${API_URI}/users`, {
       name,
       email,
       phone,
       password,
+      roles: ["4d837ae0-7ed2-49e4-bebd-cab50a79bde3"],
     });
     const user = res.data;
     if (adminState) {
@@ -158,6 +171,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     setTimeout(() => {
       toast.success(`Welcome ${user.name}`);
     }, 100);
+    // localStorage.setItem("token", user.id);
     router.push(`/employee/${user.id}`);
     setName("");
     setEmail("");
@@ -167,7 +181,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   // Delete User Function
   const handleDelete = async (id: string) => {
-    const res = await axios.delete(`${API_URI}/employees/${id}`);
+    const res = await axios.delete(`${API_URI}/users/id/${id}`);
     setTimeout(() => {
       toast.error("Employee Deleted");
     }, 100);
@@ -192,7 +206,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       }, 100);
     }
     const days = differenceInDays(new Date(to), new Date(from));
-    const res = await axios.post(`${API_URI}/leavemails`, {
+    const res = await axios.post(`${API_URI1}/leavemails`, {
       emp_id: user.id,
       name: user.name,
       email: user.email,
@@ -221,7 +235,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       new: false,
       modified_date: format(new Date(), "dd/MM/yyy"),
     };
-    const res = await axios.put(`${API_URI}/leavemails/${mail.id}`, updateMail);
+    const res = await axios.put(
+      `${API_URI1}/leavemails/${mail.id}`,
+      updateMail
+    );
     setTimeout(() => {
       toast.success(`Mail Approved for ${mail.name}`);
     }, 100);
@@ -238,7 +255,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       new: false,
       modified_date: format(new Date(), "dd/MM/yyy"),
     };
-    const res = await axios.put(`${API_URI}/leavemails/${mail.id}`, updateMail);
+    const res = await axios.put(
+      `${API_URI1}/leavemails/${mail.id}`,
+      updateMail
+    );
     setReject(!reject);
     setTimeout(() => {
       toast.error(`Mail Rejected for ${mail.name}`);
@@ -249,7 +269,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   return (
     <DataContext.Provider
       value={{
-        API_URI,
+        API_URI1,
         handleLogin,
         ulPhone,
         setulPhone,
@@ -294,6 +314,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         fetchOneMail,
         fetchAtt,
         fetchOneAtt,
+        fetchHolidays,
       }}
     >
       {children}

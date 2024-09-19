@@ -33,7 +33,7 @@ const FormInput = (probs: FormInputProbs) => {
   return (
     <div className="m-2">
       <Label htmlFor={name} className="capitalize">
-        {name || label}
+        {label}
       </Label>
       <Input
         type={type}

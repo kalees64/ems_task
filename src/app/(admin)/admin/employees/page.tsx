@@ -60,7 +60,7 @@ const Employees = () => {
 
   useEffect(() => {
     getUsers();
-  });
+  }, [fetchData]);
   return (
     <section className="w-full p-3 px-6">
       <div className="w-full flex justify-between items-center">
@@ -166,8 +166,13 @@ const Employees = () => {
                         fontSize={30}
                         className="p-1 w-full bg-red-500 rounded active:bg-yellow-500 cursor-pointer"
                         color="white"
-                        onClick={() => {
+                        onClick={async () => {
                           handleDelete(user.id);
+                          await getUsers();
+                          const users = allUsers.filter(
+                            (data: any) => data.id !== user.id
+                          );
+                          setAllUsers(users);
                         }}
                       />
                     </TableCell>

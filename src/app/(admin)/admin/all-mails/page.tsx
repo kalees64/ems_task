@@ -27,7 +27,7 @@ const LeaveMails = () => {
 
   useEffect(() => {
     getMails();
-  });
+  }, [fetchMails]);
   return (
     <section className="bg-white shadow-md rounded p-4">
       <div className="w-full flex justify-between items-center">

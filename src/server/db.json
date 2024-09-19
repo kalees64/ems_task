@@ -1,8 +1,8 @@
 {
-  "employees": [
+  "users": [
     {
       "id": "1",
-      "name": "Kaleeswaran Vairav",
+      "name": "Kaleeswaran",
       "email": "vkalees64@gmail.com",
       "phone": "8248589198",
       "password": "646464"
@@ -27,6 +27,13 @@
       "email": "kajith@gmail.com",
       "phone": "7695930325",
       "password": "646464"
+    },
+    {
+      "id": "vk64",
+      "name": "Vairavarajan",
+      "email": "vairavarajan@gmail.com",
+      "phone": "9786935749",
+      "password": "admin@spinsoft"
     }
   ],
   "leavemails": [
@@ -256,6 +263,20 @@
       "name": "Kajith",
       "date": "25/09/2024",
       "att": "present"
+    }
+  ],
+  "holidays": [
+    {
+      "id": "8631",
+      "name": "Diwali Fest",
+      "date": "19/09/2024",
+      "publicHoliday": true
+    },
+    {
+      "id": "a19e",
+      "name": "Power Cut ",
+      "date": "19/09/2024",
+      "publicHoliday": false
     }
   ]
 }

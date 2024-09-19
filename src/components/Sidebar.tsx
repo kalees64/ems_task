@@ -23,6 +23,10 @@ const Sidebar = () => {
           <Icon icon="humbleicons:mail-open" fontSize={25} />
           <Link href="/admin/all-mails">All Mails</Link>
         </div>
+        <div className="hover:bg-gray-700 p-2 rounded flex gap-4 items-center">
+          <Icon icon="uil:calender" fontSize={25} />
+          <Link href="/admin/holidays">Holidays</Link>
+        </div>
       </nav>
     </div>
   );
