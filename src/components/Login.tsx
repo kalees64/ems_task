@@ -65,9 +65,9 @@ const Login = () => {
           {/* Test Input */}
           <div className="mb-6">
             <FormInput
-              name="Phone"
-              type="text"
-              placeholder="1234567890"
+              name="Email"
+              type="email"
+              placeholder="abc@gmail.com"
               value={ulPhone}
               onChange={setulPhone}
             />

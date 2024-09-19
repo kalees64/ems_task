@@ -86,34 +86,51 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Login Function
-  const handleLogin: any = async (e: any) => {
+  // const handleLogin: any = async (e: any) => {
+  //   e.preventDefault();
+  //   if (ulPhone === "9786935749" && ulPass === "admin@spinsoft") {
+  //     setTimeout(() => {
+  //       toast.success(`Welcome Admin`);
+  //     }, 100);
+  //     setulPhone("");
+  //     setulPass("");
+  //     // localStorage.setItem("token", "admin123");
+  //     return router.push("/admin");
+  //   }
+  //   const allData = await fetchData();
+  //   const userData = allData.find(
+  //     (data: any) => data.email === ulPhone && data.password === ulPass
+  //   );
+  //   setulPhone("");
+  //   setulPass("");
+  //   // localStorage.setItem("token", userData.id);
+  //   if (!userData) {
+  //     return setTimeout(() => {
+  //       toast.error("No User Found");
+  //     }, 100);
+  //   }
+  //   setTimeout(() => {
+  //     toast.success(`Welcome ${userData.name}`);
+  //   }, 100);
+  //   router.push(`/employee/${userData.id}`);
+  //   // console.log(allData);
+  // };
+
+  const handleLogin = async (e: any) => {
     e.preventDefault();
-    if (ulPhone === "9786935749" && ulPass === "admin@spinsoft") {
-      setTimeout(() => {
-        toast.success(`Welcome Admin`);
-      }, 100);
-      setulPhone("");
-      setulPass("");
-      // localStorage.setItem("token", "admin123");
-      return router.push("/admin");
-    }
-    const allData = await fetchData();
-    const userData = allData.find(
-      (data: any) => data.phone === ulPhone && data.password === ulPass
-    );
+    const res = await axios.post(`${API_URI}/auth/login`, {
+      email: ulPhone,
+      password: ulPass,
+    });
+    const userData = res.data.data.user;
+    console.log(res.data.data);
+    localStorage.setItem("token", res.data.data);
     setulPhone("");
     setulPass("");
-    // localStorage.setItem("token", userData.id);
-    if (!userData) {
-      return setTimeout(() => {
-        toast.error("No User Found");
-      }, 100);
-    }
     setTimeout(() => {
       toast.success(`Welcome ${userData.name}`);
     }, 100);
     router.push(`/employee/${userData.id}`);
-    // console.log(allData);
   };
 
   // Update user Function
