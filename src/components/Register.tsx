@@ -23,7 +23,7 @@ const Register = () => {
     router,
   } = useContext(DataContext);
   return (
-    <main className="w-full h-screen flex justify-center items-center bg-[url('https://images.unsplash.com/photo-1726180506710-400400e6be44?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover ">
+    <main className="w-full h-screen flex justify-center items-center  bg-cover ">
       <div className="w-96 mx-auto p-4 shadow-2xl shadow-black max-sm:w-72 rounded-lg bg-white/60 relative">
         <h2 className="text-2xl font-bold mb-6 text-center">
           {adminState ? "Add Employee" : "Register"}

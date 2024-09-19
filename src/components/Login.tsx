@@ -6,27 +6,20 @@ import Link from "next/link";
 import { Toaster } from "sonner";
 import FormInput from "./form/formInput";
 import TextAreaInput from "./form/textAreaInput";
+import Form from "./form/form";
 
 const Login = () => {
   //Get Data from the context API
   const { handleLogin, ulPhone, setulPhone, ulPass, setulPass } =
     useContext(DataContext);
 
-  const [str, setStr] = useState<string>("");
-
-  // useEffect(() => {
-  //   console.log(str);
-  // });
-
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1725610588095-f117c0e2a921?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover">
+    <div className="w-full h-screen flex items-center justify-center  bg-cover">
       <div className="w-96 mx-auto p-4 border max-sm:w-72 rounded shadow-2xl shadow-black bg-white/60">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         <form
           onSubmit={(e) => {
-            e.preventDefault();
-            console.log(str);
-            // handleLogin(e);
+            handleLogin(e);
           }}
         >
           {/* Phone Input */}
@@ -93,15 +86,15 @@ const Login = () => {
 
           {/* Test Input */}
           {/* <div className="mb-6">
-            <FormInput
-              name="Testing"
-              type="text"
-              placeholder="••••••••"
-              value={str}
-              onChange={setStr}
-              minLength={10}
-            />
-          </div> */}
+        <FormInput
+          name="Testing"
+          type="text"
+          placeholder="••••••••"
+          value={str}
+          onChange={setStr}
+          minLength={10}
+        />
+      </div> */}
 
           {/* Submit Button */}
           <Button type="submit" className="w-full">

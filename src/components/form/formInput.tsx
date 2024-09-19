@@ -44,7 +44,7 @@ const FormInput = (probs: FormInputProbs) => {
         max={max}
         minLength={minLength}
         maxLength={maxLength}
-        required={required || true}
+        required={required || false}
         placeholder={placeholder}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           onChange?.(e.target.value);
@@ -55,3 +55,13 @@ const FormInput = (probs: FormInputProbs) => {
 };
 
 export default FormInput;
+
+//Example input
+{
+  /* <FormInput
+  name="phone"
+  type="text"
+  minLength={10}
+  required
+/>; */
+}
