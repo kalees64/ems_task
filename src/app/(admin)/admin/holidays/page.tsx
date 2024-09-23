@@ -120,7 +120,7 @@ const Holidays = () => {
 
   return (
     <div>
-      <section className="bg-white shadow-md rounded p-4 h-screen overflow-y-scroll">
+      <section className="bg-white shadow-md rounded p-4 ">
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-semibold mb-4 pe-5">Holidays</h1>
           <div>
@@ -132,7 +132,7 @@ const Holidays = () => {
                   <span className="text-white">Add Holiday</span>
                 </div>
               </DialogTrigger>
-              <DialogContent className="bg-white">
+              <DialogContent className="bg-white text-black max-sm:w-11/12">
                 <DialogHeader>
                   <DialogTitle>Add Holiday</DialogTitle>
                   <DialogDescription className="hidden">
@@ -188,7 +188,7 @@ const Holidays = () => {
             </Dialog>
           </div>
         </div>
-        <div className="pb-40">
+        <div className="">
           <Table>
             <TableHeader>
               <TableRow>
@@ -242,7 +242,7 @@ const Holidays = () => {
                                   }}
                                 />
                               </DialogTrigger>
-                              <DialogContent className="bg-white">
+                              <DialogContent className="bg-white text-black max-sm:w-11/12">
                                 <DialogHeader>
                                   <DialogTitle>Update Holiday</DialogTitle>
                                   <DialogDescription className="hidden">
@@ -305,7 +305,7 @@ const Holidays = () => {
                                 className="cursor-pointer"
                               />
                             </DialogTrigger>
-                            <DialogContent className="bg-white">
+                            <DialogContent className="bg-white text-black max-sm:w-11/12">
                               <DialogHeader>
                                 <DialogTitle>
                                   Do you want delete {data.name}?

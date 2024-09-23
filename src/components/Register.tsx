@@ -34,8 +34,12 @@ const Register = () => {
       .max(10, { message: "Phone number should be 10 digits" }),
     password: z
       .string()
-      .min(6, { message: "Password length between 6 to 16" })
-      .max(16, { message: "Password length between 6 to 16" }),
+      .min(8, "Password must be at least 8 characters to 16 characters long")
+      .max(16, "Password must be at least 8 characters to 16 characters long")
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
+        "Password must include at least 1 uppercase, 1 lowercase, 1 number, and 1 special character"
+      ),
   });
 
   //Use form Declaration
@@ -58,8 +62,8 @@ const Register = () => {
   };
 
   return (
-    <main className="w-full h-screen flex justify-center items-center  bg-cover ">
-      <div className="w-96 mx-auto p-4 shadow-2xl shadow-black max-sm:w-72 rounded-lg bg-white/60 relative">
+    <main className="w-full h-screen flex justify-center items-center  bg-cover bg-white">
+      <div className="w-96 mx-auto p-4 shadow-2xl shadow-black max-sm:w-72 rounded-lg bg-white/60 relative text-black">
         <h2 className="text-2xl font-bold mb-6 text-center">
           {adminState ? "Add Employee" : "Register"}
         </h2>

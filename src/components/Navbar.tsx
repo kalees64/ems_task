@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import Sidebar from "./Sidebar";
 
 const Navbar = ({ allEmps }: { allEmps: any }) => {
   //Get data from the context API
@@ -39,6 +40,8 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
     fetchAtt,
     load,
     setLoad,
+    side,
+    setSide,
   } = useContext(DataContext);
 
   //States for employee manual attendace form
@@ -93,15 +96,26 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
     setAttDate("");
   };
   return (
-    <div className="flex items-center justify-end bg-gray-100 p-4 shadow-md">
+    <div className="flex items-center justify-between bg-gray-100 p-4 shadow-md text-black relative">
       {/* <div>Admin Dashboard</div> */}
-      <div className="space-x-4 flex gap-3 items-center">
+      <div className="space-x-4 flex items-center">
+        <Icon
+          icon="iconamoon:menu-burger-horizontal-thin"
+          fontSize={30}
+          className="lg:hidden self-start cursor-pointer"
+          onClick={() => {
+            setSide(!side);
+          }}
+        />
+        <h1 className="lg:hidden font-bold">Admin</h1>
+      </div>
+      <div className="flex items-center justify-end space-x-4  ">
         <Dialog>
           <DialogTrigger asChild>
             <Button>Employee Attendance</Button>
           </DialogTrigger>
 
-          <DialogContent className="bg-white">
+          <DialogContent className="bg-white text-black max-sm:w-11/12">
             <form
               onSubmit={(e) => {
                 handleSubmit(e);
@@ -201,7 +215,7 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
               className="cursor-pointer"
             />
           </DialogTrigger>
-          <DialogContent className="bg-white">
+          <DialogContent className="bg-white text-black max-sm:w-11/12">
             <DialogHeader>
               <DialogTitle>Do you want logout?</DialogTitle>
               <DialogDescription>Click yes to logout</DialogDescription>
@@ -233,6 +247,11 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
           </DialogContent>
         </Dialog>
       </div>
+      {side && (
+        <div className="absolute left-0 top-16 bg-white w-full h-12/12 z-50 lg:hidden">
+          <Sidebar />
+        </div>
+      )}
     </div>
   );
 };

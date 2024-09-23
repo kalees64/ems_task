@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const Employees = () => {
   //Manage all users state
@@ -70,9 +71,9 @@ const Employees = () => {
     getUsers();
   }, [fetchData]);
   return (
-    <section className="w-full p-3 px-6">
-      <div className="w-full flex justify-between items-center">
-        <h2 className="text-lg font-semibold mb-4">All Employees</h2>
+    <section className="w-full ">
+      <div className="w-full flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold ">All Employees</h2>
 
         <div
           className="bg-black p-2 rounded text-white flex gap-2 items-center cursor-pointer"
@@ -102,7 +103,7 @@ const Employees = () => {
           </CardContent>
         </Card>
       </div>
-      <Card className="w-full mt-5 pt-2 max-sm:px-1 max-sm:overflow-x-scroll relative">
+      <Card className="w-full mt-5 pt-2 max-sm:px-1  relative px-4">
         <h2 className="text-lg font-semibold ps-2 pb-2 pt-2">Employees List</h2>
 
         <Table>
@@ -137,7 +138,7 @@ const Employees = () => {
                             }}
                           />
                         </DialogTrigger>
-                        <DialogContent className="bg-white">
+                        <DialogContent className="bg-white text-black max-sm:w-11/12">
                           <DialogHeader>
                             <h1>Employee Update Form</h1>
                           </DialogHeader>
@@ -147,33 +148,42 @@ const Employees = () => {
                               handleUpdate(e, user);
                             }}
                           >
-                            <input
-                              type="text"
-                              placeholder="Employee Name"
-                              value={uName}
-                              onChange={(e) => {
-                                setuName(e.target.value);
-                              }}
-                              className="w-full h-10 indent-3 focus:outline-none rounded text-lg"
-                            />
-                            <input
-                              type="text"
-                              placeholder="Employee Email"
-                              value={uEmail}
-                              onChange={(e) => {
-                                setuEmail(e.target.value);
-                              }}
-                              className="w-full h-10 indent-3 focus:outline-none rounded text-lg"
-                            />
-                            <input
-                              type="text"
-                              placeholder="Employee Phone"
-                              value={uPhone}
-                              onChange={(e) => {
-                                setuPhone(e.target.value);
-                              }}
-                              className="w-full h-10 indent-3 focus:outline-none rounded text-lg"
-                            />
+                            <div>
+                              <Label>Name</Label>
+                              <Input
+                                type="text"
+                                placeholder="Employee Name"
+                                value={uName}
+                                onChange={(e) => {
+                                  setuName(e.target.value);
+                                }}
+                                className=" text-lg"
+                              />
+                            </div>
+                            <div>
+                              <Label>Email</Label>
+                              <Input
+                                type="text"
+                                placeholder="Employee Email"
+                                value={uEmail}
+                                onChange={(e) => {
+                                  setuEmail(e.target.value);
+                                }}
+                                className=" text-lg"
+                              />
+                            </div>
+                            <div>
+                              <Label>Phone</Label>
+                              <Input
+                                type="text"
+                                placeholder="Employee Phone"
+                                value={uPhone}
+                                onChange={(e) => {
+                                  setuPhone(e.target.value);
+                                }}
+                                className=" text-lg"
+                              />
+                            </div>
 
                             <DialogClose asChild>
                               <input
@@ -194,7 +204,7 @@ const Employees = () => {
                             className="cursor-pointer"
                           />
                         </DialogTrigger>
-                        <DialogContent className="bg-white">
+                        <DialogContent className="bg-white text-black max-sm:w-11/12">
                           <DialogHeader>
                             <DialogTitle>
                               Do you want delete {user.name}?

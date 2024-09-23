@@ -1,299 +1,90 @@
 {
   "users": [
     {
-      "id": "1",
-      "name": "Kaleeswaran",
+      "id": "7cd8",
+      "name": "Kaleeswaran V",
       "email": "vkalees64@gmail.com",
-      "phone": "8248589198",
-      "password": "646464"
+      "phone": "+91-8248589198",
+      "password": "Vairamages@64",
+      "dob": "2003-05-24",
+      "role": {
+        "type": "employee",
+        "title": "Employee"
+      },
+      "total_leaves": 36,
+      "pending_leaves": 18,
+      "casual_leaves": 4,
+      "sick_leaves": 2,
+      "paid_leaves": 12,
+      "pay_offs": 0
     },
     {
-      "id": "388d",
-      "name": "Ram Kumar",
-      "email": "ram@gmail.com",
-      "phone": "1234567890",
-      "password": "123456"
-    },
-    {
-      "id": "ce1e",
-      "name": "Arun V",
-      "email": "arun@gmail.com",
-      "phone": "2345678901",
-      "password": "646464"
-    },
-    {
-      "id": "287f",
-      "name": "Kajith",
-      "email": "kajith@gmail.com",
-      "phone": "7695930325",
-      "password": "646464"
-    },
-    {
-      "id": "vk64",
-      "name": "Vairavarajan",
-      "email": "vairavarajan@gmail.com",
-      "phone": "9786935749",
-      "password": "admin@spinsoft"
+      "id": "7cd9",
+      "name": "Arun",
+      "email": "vkalees@gmail.com",
+      "phone": "+91-9786935749",
+      "password": "Admin@64",
+      "dob": "2024-09-23",
+      "role": {
+        "type": "admin",
+        "title": "Admin"
+      },
+      "total_leaves": 36,
+      "pending_leaves": 36,
+      "casual_leaves": 12,
+      "sick_leaves": 12,
+      "paid_leaves": 12,
+      "pay_offs": 0
     }
   ],
   "leavemails": [
     {
-      "id": "ccba",
-      "emp_id": "1",
+      "id": "0b3c",
+      "emp_id": "7cd8",
       "name": "Kaleeswaran V",
-      "email": "vk64@gmail.com",
-      "leave_from": "14/09/2024",
-      "leave_to": "28/09/2024",
-      "reason": "Leave Application for attending the Marriage Function",
+      "email": "vkalees64@gmail.com",
+      "leave_from": "03/09/2024",
+      "leave_to": "13/09/2024",
+      "reason": "I am suffering from Fever",
       "new": false,
-      "created_date": "13/09/2024",
-      "modified_date": "16/09/2024",
-      "total_days": 14,
-      "status": false,
-      "r_reason": "Your holidays are done..."
+      "type": "sick",
+      "created_date": "23/09/2024",
+      "modified_date": "23/09/2024",
+      "total_days": 10
     },
     {
-      "id": "6a59",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "email": "ram@gmail.com",
-      "leave_from": "27/09/2024",
-      "leave_to": "04/10/2024",
-      "reason": "Last Dance",
+      "id": "f787",
+      "emp_id": "7cd8",
+      "name": "Kaleeswaran V",
+      "email": "vkalees64@gmail.com",
+      "leave_from": "24/09/2024",
+      "leave_to": "02/10/2024",
+      "reason": "I am going to family tour",
       "new": false,
-      "created_date": "13/09/2024",
-      "modified_date": "16/09/2024",
-      "total_days": 7,
+      "type": "casual",
+      "created_date": "23/09/2024",
+      "modified_date": "23/09/2024",
+      "total_days": 8,
       "status": true
     },
     {
-      "id": "f0df",
-      "emp_id": "1",
+      "id": "bbd8",
+      "emp_id": "7cd8",
       "name": "Kaleeswaran V",
       "email": "vkalees64@gmail.com",
-      "leave_from": "19/09/2024",
-      "leave_to": "26/09/2024",
-      "reason": "Leave for Festival\n",
+      "leave_from": "15/10/2024",
+      "leave_to": "20/10/2024",
+      "reason": "Temple Festival",
       "new": false,
-      "created_date": "16/09/2024",
-      "modified_date": "20/09/2024",
-      "total_days": 7,
-      "status": true
-    },
-    {
-      "id": "3861",
-      "emp_id": "1",
-      "name": "Kaleeswaran",
-      "email": "vkalees64@gmail.com",
-      "leave_from": "18/09/2024",
-      "leave_to": "28/09/2024",
-      "reason": "Weekend Leave",
-      "new": false,
-      "created_date": "17/09/2024",
-      "modified_date": "17/09/2024",
-      "total_days": 10,
+      "type": "",
+      "created_date": "23/09/2024",
+      "modified_date": "23/09/2024",
+      "total_days": 5,
       "status": false,
-      "r_reason": "No weekend"
-    },
-    {
-      "id": "799f",
-      "emp_id": "d1b7d57a-98be-4908-aaa0-918b16ac77c3",
-      "name": "Kaleeswaran V",
-      "email": "vkalees64@gmail.com",
-      "leave_from": "25/09/2024",
-      "leave_to": "28/09/2024",
-      "reason": "Sick Leave",
-      "new": false,
-      "created_date": "20/09/2024",
-      "modified_date": "20/09/2024",
-      "total_days": 3,
-      "status": false,
-      "r_reason": "No Leave For You"
-    },
-    {
-      "id": "2c2c",
-      "emp_id": "d1b7d57a-98be-4908-aaa0-918b16ac77c3",
-      "name": "Kaleeswaran ",
-      "email": "vkalees64@gmail.com",
-      "leave_from": "20/09/2024",
-      "leave_to": "25/09/2024",
-      "reason": "Medical Leave",
-      "new": true,
-      "created_date": "20/09/2024",
-      "modified_date": "20/09/2024",
-      "total_days": 5
+      "r_reason": "Your festival leaves are cancelled due to your work pendings"
     }
   ],
-  "attendances": [
-    {
-      "id": "880c",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "13/09/2024",
-      "att": "present"
-    },
-    {
-      "id": "847c",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "13/09/2024",
-      "att": "present"
-    },
-    {
-      "id": "aeaa",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "14/09/2024",
-      "att": "leave"
-    },
-    {
-      "id": "fdcb",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "11/09/2024",
-      "att": "s_leave"
-    },
-    {
-      "id": "c76b",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "03/09/2024",
-      "att": "payoff"
-    },
-    {
-      "id": "d194",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "02/09/2024",
-      "att": "leave"
-    },
-    {
-      "id": "2f63",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "10/09/2024",
-      "att": "s_leave"
-    },
-    {
-      "id": "c57b",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "16/09/2024",
-      "att": "payoff"
-    },
-    {
-      "id": "c603",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "14/09/2024",
-      "att": "present"
-    },
-    {
-      "id": "c671",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "01/10/2024",
-      "att": "present"
-    },
-    {
-      "id": "cde7",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "25/09/2024",
-      "att": "s_leave"
-    },
-    {
-      "id": "de1c",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "02/10/2024",
-      "att": "pre"
-    },
-    {
-      "id": "069e",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "03/10/2024",
-      "att": "leave"
-    },
-    {
-      "id": "bdb3",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "01/10/2024",
-      "att": "payoff"
-    },
-    {
-      "id": "2cd2",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "11/10/2024",
-      "att": "s_leave"
-    },
-    {
-      "id": "e42c",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "08/10/2024",
-      "att": "s_leave"
-    },
-    {
-      "id": "e97f",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "26/09/2024",
-      "att": "leave"
-    },
-    {
-      "id": "ea6f",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "03/10/2024",
-      "att": "s_leave"
-    },
-    {
-      "id": "9f83",
-      "emp_id": "1",
-      "name": "Kaleeswaran V",
-      "date": "03/10/2024",
-      "att": "present"
-    },
-    {
-      "id": "71a7",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "10/10/2024",
-      "att": "payoff"
-    },
-    {
-      "id": "05de",
-      "emp_id": "ce1e",
-      "name": "Arun",
-      "date": "03/10/2024",
-      "att": "leave"
-    },
-    {
-      "id": "e091",
-      "emp_id": "388d",
-      "name": "Ram Kumar P",
-      "date": "08/10/2024",
-      "att": "payoff"
-    },
-    {
-      "id": "c108",
-      "emp_id": "287f",
-      "name": "Kajith",
-      "date": "17/09/2024",
-      "att": "pre"
-    },
-    {
-      "id": "35dd",
-      "emp_id": "287f",
-      "name": "Kajith",
-      "date": "25/09/2024",
-      "att": "present"
-    }
-  ],
+  "attendances": [],
   "holidays": [
     {
       "id": "8631",

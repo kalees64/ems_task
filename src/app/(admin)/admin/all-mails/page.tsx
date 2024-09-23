@@ -9,31 +9,59 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import DataContext from "../../../../context/DataContext";
+import Link from "next/link";
 
 const LeaveMails = () => {
   //Manage all mails state
   const [allMails, setAllMails] = useState([]);
 
   //Get data from context API
-  const { fetchMails } = useContext(DataContext);
+  const { fetchMails, router } = useContext(DataContext);
 
   //Get all Mails function
   const getMails = async () => {
     const res = await fetchMails();
-    const res1 = res.filter((data: any) => !data.new);
+    const res1 = res.filter((data: any) => !data.new && data.type !== "sick");
     const res2 = res1.reverse();
     setAllMails(res2);
   };
+
+  // mail states
+  const [newState, setNewState] = useState(true);
 
   useEffect(() => {
     getMails();
   }, [fetchMails]);
   return (
     <section className="bg-white shadow-md rounded p-4">
+      <div className="flex gap-3 pb-2">
+        <Link
+          href="/admin/mails"
+          className={`p-2 border rounded-md active:bg-blue-500 ${
+            !newState ? "bg-black text-white" : "bg-white text-black"
+          }`}
+          onClick={() => {
+            setNewState(true);
+          }}
+        >
+          New Mails
+        </Link>
+        <Link
+          href="/admin/all-mails"
+          className={`p-2 border rounded-md active:bg-blue-500 ${
+            newState ? "bg-black text-white" : "bg-white text-black"
+          }`}
+          onClick={() => {
+            setNewState(false);
+          }}
+        >
+          All Mails
+        </Link>
+      </div>
       <div className="w-full flex justify-between items-center">
         <h2 className="text-lg font-semibold mb-4">Employees Leave Mails</h2>
       </div>
-      <div className="w-full pt-5  max-sm:px-1 max-sm:overflow-x-scroll">
+      <div className="w-full pt-5  max-sm:px-1 ">
         <Table>
           <TableHeader>
             <TableRow>

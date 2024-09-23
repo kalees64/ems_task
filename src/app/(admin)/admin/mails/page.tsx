@@ -20,6 +20,7 @@ import {
 import { Icon } from "@iconify/react";
 import React, { useContext, useEffect, useState } from "react";
 import DataContext from "../../../../context/DataContext";
+import Link from "next/link";
 
 const LeaveMails = () => {
   //Manage all Mails and new Mails States
@@ -35,6 +36,7 @@ const LeaveMails = () => {
     handleReject,
     load,
     setLoad,
+    router,
   } = useContext(DataContext);
 
   //Get Mails function
@@ -55,11 +57,38 @@ const LeaveMails = () => {
   //Mail rejection form state
   const [reason, setReason] = useState("");
 
+  // mail states
+  const [newState, setNewState] = useState(true);
+
   useEffect(() => {
     getMails();
   }, [fetchOneMail]);
   return (
     <section className="bg-white shadow-md rounded p-4">
+      <div className="flex gap-3 pb-2">
+        <Link
+          href="/admin/mails"
+          className={`p-2 border rounded-md active:bg-blue-500 ${
+            newState ? "bg-black text-white" : "bg-white text-black"
+          }`}
+          onClick={() => {
+            setNewState(true);
+          }}
+        >
+          New Mails
+        </Link>
+        <Link
+          href="/admin/all-mails"
+          className={`p-2 border rounded-md active:bg-blue-500 ${
+            !newState ? "bg-black text-white" : "bg-white text-black"
+          }`}
+          onClick={() => {
+            setNewState(false);
+          }}
+        >
+          All Mails
+        </Link>
+      </div>
       {newMails.length > 0 && (
         <div className="w-full relative">
           <div className="w-full  gap-5 items-center">
@@ -74,7 +103,7 @@ const LeaveMails = () => {
               className="animate-ping inline-block"
             />
           </div>
-          <div className="w-full pt-5  max-sm:px-1 max-sm:overflow-x-scroll pb-4">
+          <div className="w-full pt-5  max-sm:px-1  pb-4">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -135,7 +164,7 @@ const LeaveMails = () => {
                                 }}
                               />
                             </DialogTrigger>
-                            <DialogContent className="bg-white">
+                            <DialogContent className="bg-white text-black max-sm:w-11/12">
                               <DialogHeader>
                                 <h1>Email Rejection Form</h1>
                               </DialogHeader>

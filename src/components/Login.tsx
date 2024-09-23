@@ -26,8 +26,12 @@ const Login = () => {
       email: z.string().email("Please enter a valid email address"),
       password: z
         .string()
-        .min(6, { message: "Password length between 6 to 16" })
-        .max(16, { message: "Password length between 6 to 16" }),
+        .min(8, "Password must be at least 8 characters to 16 characters long")
+        .max(16, "Password must be at least 8 characters to 16 characters long")
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
+          "Password must include at least 1 uppercase, 1 lowercase, 1 number, and 1 special character"
+        ),
     })
     .required();
 
@@ -48,12 +52,14 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center  bg-cover">
-      <div className="w-96 mx-auto p-4 border max-sm:w-72 rounded shadow-2xl shadow-black bg-white/60">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+    <div className="w-full h-screen flex items-center justify-center  bg-cover bg-white ">
+      <div className="w-96 mx-auto p-4 border max-sm:w-72 rounded shadow-2xl shadow-black bg-white/60 dark:bg-white text-black">
+        <h2 className="text-2xl font-bold mb-6 text-center text-black">
+          Login
+        </h2>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(formSubmit)}>
+          <form onSubmit={form.handleSubmit(formSubmit)} method="post">
             <FormField
               name="email"
               control={form.control}
