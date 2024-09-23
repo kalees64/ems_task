@@ -5,23 +5,58 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Toaster } from "sonner";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
 
 const Register = () => {
   //Get data from the context API
-  const {
-    name,
-    setName,
-    email,
-    setEmail,
-    phone,
-    setPhone,
-    password,
-    setPassword,
-    handleRegister,
-    adminState,
-    setAdminState,
-    router,
-  } = useContext(DataContext);
+  const { adminState, setAdminState, router, handleRegister, load, setLoad } =
+    useContext(DataContext);
+
+  //Form Schema
+  const registerSchema = z.object({
+    name: z
+      .string()
+      .min(2, { message: "Name should be greater than 2 letters" }),
+    email: z.string().email("Please enter the valid email address"),
+    phone: z
+      .string()
+      .min(10, { message: "Phone number should be 10 digits" })
+      .max(10, { message: "Phone number should be 10 digits" }),
+    password: z
+      .string()
+      .min(6, { message: "Password length between 6 to 16" })
+      .max(16, { message: "Password length between 6 to 16" }),
+  });
+
+  //Use form Declaration
+  const form = useForm({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+    },
+  });
+
+  //form submit fuction
+  const formSubmit = (data: any) => {
+    // console.log(data);
+    setLoad(true);
+    handleRegister(data);
+    form.reset();
+  };
+
   return (
     <main className="w-full h-screen flex justify-center items-center  bg-cover ">
       <div className="w-96 mx-auto p-4 shadow-2xl shadow-black max-sm:w-72 rounded-lg bg-white/60 relative">
@@ -40,111 +75,90 @@ const Register = () => {
             }}
           />
         )}
-
-        <form
-          onSubmit={(e) => {
-            handleRegister(e);
-          }}
-        >
-          {/* Name Input */}
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Name
-            </label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="John Doe"
-              required
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              className="w-full"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(formSubmit)}>
+            <FormField
+              name="name"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input type="text" {...field} placeholder="Robert" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-
-          {/* Email Input */}
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Email
-            </label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="johndoe@example.com"
-              value={email}
-              required
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              className="w-full"
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      {...field}
+                      placeholder="robert@gmail.com"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-
-          {/* Phone Input */}
-          <div className="mb-4">
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Phone
-            </label>
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="1234567890"
-              required
-              value={phone}
-              onChange={(e) => {
-                setPhone(e.target.value);
-              }}
-              className="w-full"
+            <FormField
+              name="phone"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      {...field}
+                      required={false}
+                      placeholder="9656458767"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-
-          {/* Password Input */}
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Password
-            </label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              required
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              className="w-full"
+            <FormField
+              name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} placeholder="••••••••" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-
-          {/* Submit Button */}
-          <Button type="submit" className="w-full">
-            {adminState ? "Add Employee" : "Register"}
-          </Button>
-
-          {!adminState && (
-            <p className="pt-3">
-              Already you have an account?
-              <Link href="/" className="text-red-500">
-                {" "}
-                Login
-              </Link>
-            </p>
-          )}
-        </form>
+            <div className="pt-3 w-full">
+              <Button type="submit" className="w-full" disabled={load}>
+                {load && (
+                  <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+                )}
+                {adminState ? "Add Employee" : "Register"}
+              </Button>
+            </div>
+            <div>
+              {!adminState && (
+                <p className="pt-3">
+                  Already you have an account?
+                  <Link href="/" className="text-red-500">
+                    {" "}
+                    Login
+                  </Link>
+                </p>
+              )}
+            </div>
+          </form>
+        </Form>
       </div>
       <Toaster richColors position="top-center" />
     </main>

@@ -1,6 +1,4 @@
 "use client";
-import Form from "@/components/form/form";
-import FormInput from "@/components/form/formInput";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,14 +20,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import DataContext from "@/context/DataContext";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import React, { useContext, useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
 
 const Holidays = () => {
   //Get data from context API
-  const { fetchHolidays, API_URI } = useContext(DataContext);
+  const { fetchHolidays, load, setLoad } = useContext(DataContext);
 
   //Manage all Holidays state
   const [holidays, setHolidays] = useState([]);
@@ -37,30 +36,35 @@ const Holidays = () => {
   //Add Holiday states
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [publicHoliday, setPublicHoliday] = useState(true);
+  const [publicHoliday, setPublicHoliday] = useState<boolean>(true);
 
   //Update Holiday states
   const [uname, setuName] = useState("");
   const [udate, setuDate] = useState("");
-  const [upublicHoliday, setuPublicHoliday] = useState();
+  const [upublicHoliday, setuPublicHoliday] = useState<boolean>(true);
 
   //Add new holiday function
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const hDate = format(date, "dd/MM/yyyy");
     const newHoliday = { name, date: hDate, publicHoliday };
     const res = await fetchHolidays();
-    const findHoliday = res.find((data) => data.date === hDate);
+    const findHoliday = res.find((data: any) => data.date === hDate);
     if (findHoliday) {
       setName("");
       setDate("");
       setPublicHoliday(true);
+      setLoad(false);
       return setTimeout(() => {
         toast.error("Holiday Already Found");
       }, 100);
     }
-    const add = await axios.post(`${API_URI}/holidays`, { ...newHoliday });
+    const add = await axios.post(
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/holidays`,
+      { ...newHoliday }
+    );
     await startup();
+    setLoad(false);
     setTimeout(() => {
       toast.success("Holiday Added");
     }, 100);
@@ -70,7 +74,7 @@ const Holidays = () => {
   };
 
   //Update Holiday Form
-  const handleEdit = async (e, id) => {
+  const handleEdit = async (e: any, id: string) => {
     e.preventDefault();
     const updatedHoliday = {
       id,
@@ -79,9 +83,12 @@ const Holidays = () => {
       publicHoliday: upublicHoliday,
     };
     // console.log(updatedHoliday);
-    const add = await axios.patch(`${API_URI}/holidays/${id}`, {
-      ...updatedHoliday,
-    });
+    const add = await axios.patch(
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/holidays/${id}`,
+      {
+        ...updatedHoliday,
+      }
+    );
     setTimeout(() => {
       toast.success("Holiday Updated");
     }, 100);
@@ -89,8 +96,11 @@ const Holidays = () => {
   };
 
   //Delete function
-  const handleDelete = async (id) => {
-    const add = await axios.delete(`${API_URI}/holidays/${id}`);
+  const handleDelete = async (id: string) => {
+    const add = await axios.delete(
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/holidays/${id}`
+    );
+    setLoad(false);
     setTimeout(() => {
       toast.success("Holiday Deleted");
     }, 100);
@@ -112,14 +122,15 @@ const Holidays = () => {
     <div>
       <section className="bg-white shadow-md rounded p-4 h-screen overflow-y-scroll">
         <div className="flex items-center justify-between">
-          <h1 className="text-lg font-semibold mb-4 pe-5">
-            Employees Leave Mails
-          </h1>
+          <h1 className="text-lg font-semibold mb-4 pe-5">Holidays</h1>
           <div>
             {/* Add Holiday Dialog */}
             <Dialog>
               <DialogTrigger asChild>
-                <Button>Add Holiday</Button>
+                <div className="flex items-center gap-2 bg-black p-1.5 rounded-sm cursor-pointer">
+                  <Icon icon="zondicons:date-add" fontSize={25} color="white" />
+                  <span className="text-white">Add Holiday</span>
+                </div>
               </DialogTrigger>
               <DialogContent className="bg-white">
                 <DialogHeader>
@@ -129,6 +140,7 @@ const Holidays = () => {
                   </DialogDescription>
                   <form
                     onSubmit={(e) => {
+                      setLoad(true);
                       handleSubmit(e);
                     }}
                   >
@@ -163,9 +175,13 @@ const Holidays = () => {
                         className="size-6"
                       />
                     </div>
-                    <DialogClose asChild>
-                      <Button type="submit">submit</Button>
-                    </DialogClose>
+
+                    <Button type="submit" disabled={load}>
+                      {load && (
+                        <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+                      )}
+                      submit
+                    </Button>
                   </form>
                 </DialogHeader>
               </DialogContent>
@@ -185,7 +201,7 @@ const Holidays = () => {
             </TableHeader>
             <TableBody>
               {holidays.length > 0 ? (
-                holidays.map((data, index) => {
+                holidays.map((data: any, index) => {
                   return (
                     <TableRow key={data.id}>
                       <TableCell>{index + 1}</TableCell>
@@ -197,29 +213,34 @@ const Holidays = () => {
                           : "Internal Holiday"}
                       </TableCell>
                       <TableCell>
-                        <div className="flex gap-3 items-center">
+                        <div className="flex gap-3 items-center ">
                           <div>
                             <Dialog>
                               <DialogTrigger asChild>
-                                <Button
+                                <Icon
+                                  icon="material-symbols-light:edit-calendar-outline"
+                                  fontSize={30}
+                                  className=" cursor-pointer"
                                   onClick={async () => {
                                     const res = await fetchHolidays();
-                                    const findHoliday = res.find(
-                                      (val) => val.id === data.id
+                                    const findHoliday: any = res.find(
+                                      (val: any) => val.id === data.id
                                     );
                                     setuName(findHoliday.name);
-                                    const hDate = format(
-                                      Date(findHoliday.date),
-                                      "yyy-MM-dd"
-                                    );
-                                    setuDate(hDate);
+
+                                    const fDate =
+                                      findHoliday.date.slice(6) +
+                                      "-" +
+                                      findHoliday.date.slice(3, 5) +
+                                      "-" +
+                                      findHoliday.date.slice(0, 2);
+
+                                    setuDate(fDate);
                                     setuPublicHoliday(
                                       findHoliday.publicHoliday ? true : false
                                     );
                                   }}
-                                >
-                                  Edit
-                                </Button>
+                                />
                               </DialogTrigger>
                               <DialogContent className="bg-white">
                                 <DialogHeader>
@@ -275,13 +296,45 @@ const Holidays = () => {
                               </DialogContent>
                             </Dialog>
                           </div>
-                          <Button
-                            onClick={() => {
-                              handleDelete(data.id);
-                            }}
-                          >
-                            Delete
-                          </Button>
+
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Icon
+                                icon="ic:baseline-delete-forever"
+                                fontSize={30}
+                                className="cursor-pointer"
+                              />
+                            </DialogTrigger>
+                            <DialogContent className="bg-white">
+                              <DialogHeader>
+                                <DialogTitle>
+                                  Do you want delete {data.name}?
+                                </DialogTitle>
+                                <DialogDescription>
+                                  Click yes to delete
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="flex gap-5">
+                                <DialogClose asChild>
+                                  <Button
+                                    onClick={() => {
+                                      setLoad(true);
+                                      handleDelete(data.id);
+                                    }}
+                                    disabled={load}
+                                  >
+                                    {load && (
+                                      <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+                                    )}
+                                    Yes
+                                  </Button>
+                                </DialogClose>
+                                <DialogClose asChild>
+                                  <Button className="bg-red-700">Cancel</Button>
+                                </DialogClose>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
                         </div>
                       </TableCell>
                     </TableRow>

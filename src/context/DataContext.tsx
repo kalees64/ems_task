@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { differenceInDays, format } from "date-fns";
+import { differenceInDays, format, isBefore, parseISO } from "date-fns";
 import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useState } from "react";
 import { toast } from "sonner";
@@ -8,15 +8,8 @@ import { toast } from "sonner";
 const DataContext = createContext<any>({});
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
-  // API UTL
-  const API_URI1 = "http://localhost:3000";
-  const API_URI = "https://apihrms.assaycr.in/v1";
+  // Router initialization
   const router = useRouter();
-  // const token = localStorage.getItem("token");
-
-  // User Login Details
-  const [ulPhone, setulPhone] = useState("");
-  const [ulPass, setulPass] = useState("");
 
   // User details for Update
   const [uName, setuName] = useState("");
@@ -27,11 +20,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [updateState, setUpdateState] = useState(false);
 
   // ADD / Register Employee Details
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
   const [adminState, setAdminState] = useState(false);
+
+  // Loading Button State
+  const [load, setLoad] = useState(false);
 
   // Leave mail Request Details
   const [from, setFrom] = useState("");
@@ -41,174 +33,232 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   //Data Fetching Function -- ALL User Data
   const fetchData = async () => {
-    const res = await axios.get(`https://apihrms.assaycr.in/v1/users`);
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`);
     // console.log(res.data);
     return res.data.data;
+  };
+
+  //Get token from localstorage
+  const getToken = async () => {
+    const token1: any = localStorage.getItem("token");
+    const token2: any = await JSON.parse(token1);
+    const token = await token2.token;
+    return token;
   };
 
   //Data Fetching Function -- ALL User Data
   const fetchOneData = async (id: string) => {
-    const res = await axios.get(`https://apihrms.assaycr.in/v1/users/id/${id}`);
-    // console.log(res.data);
-    return res.data.data;
+    try {
+      const token = await getToken();
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id/${id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log(res.data);
+      return res.data.data;
+    } catch (error: any) {
+      if (error.status === 403) {
+        // router.push("/");
+      }
+    }
   };
 
   // Leave Mail Fetching all
   const fetchMails = async () => {
-    const res = await axios.get(`${API_URI1}/leavemails`);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/leavemails`
+    );
     // console.log(res.data);
     return res.data;
   };
 
   // Leave Mail Fetching one
   const fetchOneMail = async (id: string) => {
-    const res = await axios.get(`${API_URI1}/leavemails/${id}`);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/leavemails/${id}`
+    );
     // console.log(res.data);
     return res.data;
   };
 
   // Attendance fetching all
-  const fetchAtt: any = async () => {
-    const res = await axios.get(`${API_URI1}/attendances`);
+  const fetchAtt = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/attendances`
+    );
     return res.data;
   };
 
   // Attendance fetching One
   const fetchOneAtt = async (id: string) => {
-    const res = await axios.get(`${API_URI1}/attendances/${id}`);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/attendances/${id}`
+    );
     return res.data;
   };
 
   // Get All Holidays List
   const fetchHolidays = async () => {
-    const res = await axios.get(`${API_URI1}/holidays`);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/holidays`
+    );
     return res.data;
   };
 
-  // Login Function
-  // const handleLogin: any = async (e: any) => {
-  //   e.preventDefault();
-  //   if (ulPhone === "9786935749" && ulPass === "admin@spinsoft") {
-  //     setTimeout(() => {
-  //       toast.success(`Welcome Admin`);
-  //     }, 100);
-  //     setulPhone("");
-  //     setulPass("");
-  //     // localStorage.setItem("token", "admin123");
-  //     return router.push("/admin");
-  //   }
-  //   const allData = await fetchData();
-  //   const userData = allData.find(
-  //     (data: any) => data.email === ulPhone && data.password === ulPass
-  //   );
-  //   setulPhone("");
-  //   setulPass("");
-  //   // localStorage.setItem("token", userData.id);
-  //   if (!userData) {
-  //     return setTimeout(() => {
-  //       toast.error("No User Found");
-  //     }, 100);
-  //   }
-  //   setTimeout(() => {
-  //     toast.success(`Welcome ${userData.name}`);
-  //   }, 100);
-  //   router.push(`/employee/${userData.id}`);
-  //   // console.log(allData);
-  // };
+  //Login Fuction
+  const handleLogin = async (data: any) => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          email: data.email,
+          password: data.password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const userData = res.data.data.user;
+      localStorage.setItem("token", JSON.stringify(res.data.data));
+      setLoad(false);
+      setTimeout(() => {
+        toast.success(`Welcome ${userData.name}`);
+      }, 100);
+      router.push(`/employee/${userData.id}`);
+    } catch (error: any) {
+      setLoad(false);
+      return setTimeout(() => {
+        toast.error(`Invalid Email & Password`);
+      }, 100);
+    }
+  };
 
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
-    const res = await axios.post(`${API_URI}/auth/login`, {
-      email: ulPhone,
-      password: ulPass,
-    });
-    const userData = res.data.data.user;
-    console.log(res.data.data);
-    localStorage.setItem("token", res.data.data);
-    setulPhone("");
-    setulPass("");
-    setTimeout(() => {
-      toast.success(`Welcome ${userData.name}`);
-    }, 100);
-    router.push(`/employee/${userData.id}`);
+  // Regiser / Add user Function
+  const handleRegister = async (data: any) => {
+    // 4d837ae0-7ed2-49e4-bebd-cab50a79bde3
+    try {
+      const allData = await fetchData();
+      const phoneNumber = "+91-" + data.phone;
+      const userData = allData.find(
+        (user: any) => user.email === data.email || user.phone === phoneNumber
+      );
+      if (userData) {
+        setLoad(false);
+        return setTimeout(() => {
+          toast.error("Employee Already Found");
+        }, 100);
+      }
+    } catch (error: any) {
+      setLoad(false);
+      return setTimeout(() => {
+        toast.error(error.message);
+      }, 100);
+    }
+    try {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+        name: data.name,
+        email: data.email,
+        phone: data.phone ? "+91-" + data.phone : "",
+        password: data.password,
+        roles: ["4d837ae0-7ed2-49e4-bebd-cab50a79bde3"],
+      });
+      const user = res.data.data;
+      // console.log(user);
+      if (adminState) {
+        setAdminState(!adminState);
+        setLoad(false);
+        setTimeout(() => {
+          toast.success("Employee Added");
+        }, 100);
+        return router.push("/admin/employees");
+      }
+      const res1 = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          email: data.email,
+          password: data.password,
+        }
+      );
+      const userData = res1.data.data.user;
+      localStorage.setItem("token", JSON.stringify(res.data.data));
+      setLoad(false);
+      setTimeout(() => {
+        toast.success(`Welcome ${userData.name}`);
+      }, 100);
+      router.push(`/employee/${userData.id}`);
+    } catch (error) {
+      setLoad(false);
+      return setTimeout(() => {
+        toast.error("Employee Not Added - Server Error");
+      }, 100);
+    }
   };
 
   // Update user Function
   const handleUpdate = async (e: any, user: any) => {
     e.preventDefault();
-    const newData = {
-      id: user.id,
-      name: uName ? uName : user.name,
-      email: uEmail ? uEmail : user.email,
-      phone: uPhone ? uPhone : user.phone,
-      password: user.password,
-    };
-    const res = await axios.put(`${API_URI}/users/id/${user.id}`, newData);
+    try {
+      const newData = {
+        id: user.id,
+        name: uName,
+        email: uEmail,
+        phone: uPhone,
+        password: user.password,
+      };
+      const token1: any = localStorage.getItem("token");
+      const token2: any = JSON.parse(token1);
+      const token = token2.token;
+      const res = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id/${user.id}`,
+        newData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-    // console.log(res);
-    // setUpdateState(!updateState);
-    setTimeout(() => {
-      toast.success("Employee Updated");
-    }, 100);
-    setuEmail("");
-    setuName("");
-    setuPhone("");
-  };
-
-  // Regiser / Add user Function
-  const handleRegister = async (e: any) => {
-    // 4d837ae0-7ed2-49e4-bebd-cab50a79bde3
-    e.preventDefault();
-    const allData = await fetchData();
-    const userData = allData.find((data: any) => data.phone === phone);
-    if (userData) {
-      setName("");
-      setEmail("");
-      setPhone("");
-      setPassword("");
-      return setTimeout(() => {
-        toast.error("Employee Already Found");
-      }, 100);
-    }
-    const res = await axios.post(`${API_URI}/users`, {
-      name,
-      email,
-      phone,
-      password,
-      roles: ["4d837ae0-7ed2-49e4-bebd-cab50a79bde3"],
-    });
-    const user = res.data;
-    if (adminState) {
-      setAdminState(!adminState);
+      // console.log(res);
+      // setUpdateState(!updateState);
       setTimeout(() => {
-        toast.success("Employee Added");
+        toast.success("Employee Updated");
       }, 100);
-      return router.push("/admin");
+      setuEmail("");
+      setuName("");
+      setuPhone("");
+    } catch (error: any) {
+      setTimeout(() => {
+        toast.error(error.message);
+      }, 100);
     }
-    setTimeout(() => {
-      toast.success(`Welcome ${user.name}`);
-    }, 100);
-    // localStorage.setItem("token", user.id);
-    router.push(`/employee/${user.id}`);
-    setName("");
-    setEmail("");
-    setPhone("");
-    setPassword("");
   };
 
   // Delete User Function
   const handleDelete = async (id: string) => {
-    const res = await axios.delete(`${API_URI}/users/id/${id}`);
-    setTimeout(() => {
-      toast.error("Employee Deleted");
-    }, 100);
-    // console.log(res.data);
+    try {
+      const res = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/id/${id}`
+      );
+      setTimeout(() => {
+        toast.success("Employee Deleted");
+      }, 100);
+      return true;
+    } catch (error: any) {
+      setTimeout(() => {
+        toast.error(error.message);
+      }, 100);
+      return false;
+    }
   };
 
   // Leave Mail Request Function
   const handelLeaveMail = async (e: any, user: any) => {
     e.preventDefault();
     const allMails = await fetchMails();
+    const checkTo = parseISO(to);
+    const checkFrom = parseISO(from);
+    if (isBefore(checkTo, checkFrom)) {
+      setLoad(false);
+      return setTimeout(() => {
+        toast.error("End date is not before than start date");
+      }, 100);
+    }
     const fromDate = format(from, "dd/MM/yyyy");
     const toDate = format(to, "dd/MM/yyyy");
     const userMail = allMails.find(
@@ -218,27 +268,32 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       setFrom("");
       setTo("");
       setReason("");
+      setLoad(false);
       return setTimeout(() => {
         toast.error("This leave already applied");
       }, 100);
     }
     const days = differenceInDays(new Date(to), new Date(from));
-    const res = await axios.post(`${API_URI1}/leavemails`, {
-      emp_id: user.id,
-      name: user.name,
-      email: user.email,
-      leave_from: fromDate,
-      leave_to: toDate,
-      reason: reason,
-      new: true,
-      created_date: format(new Date(), "dd/MM/yyy"),
-      modified_date: format(new Date(), "dd/MM/yyy"),
-      total_days: differenceInDays(new Date(to), new Date(from)),
-    });
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/leavemails`,
+      {
+        emp_id: user.id,
+        name: user.name,
+        email: user.email,
+        leave_from: fromDate,
+        leave_to: toDate,
+        reason: reason,
+        new: true,
+        created_date: format(new Date(), "dd/MM/yyy"),
+        modified_date: format(new Date(), "dd/MM/yyy"),
+        total_days: differenceInDays(new Date(to), new Date(from)),
+      }
+    );
     // console.log(days);
     setTimeout(() => {
       toast.success("Mail sent");
     }, 100);
+    setLoad(false);
     setFrom("");
     setTo("");
     setReason("");
@@ -253,7 +308,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       modified_date: format(new Date(), "dd/MM/yyy"),
     };
     const res = await axios.put(
-      `${API_URI1}/leavemails/${mail.id}`,
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/leavemails/${mail.id}`,
       updateMail
     );
     setTimeout(() => {
@@ -273,10 +328,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       modified_date: format(new Date(), "dd/MM/yyy"),
     };
     const res = await axios.put(
-      `${API_URI1}/leavemails/${mail.id}`,
+      `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/leavemails/${mail.id}`,
       updateMail
     );
     setReject(!reject);
+    setLoad(false);
     setTimeout(() => {
       toast.error(`Mail Rejected for ${mail.name}`);
     }, 100);
@@ -286,12 +342,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   return (
     <DataContext.Provider
       value={{
-        API_URI1,
         handleLogin,
-        ulPhone,
-        setulPhone,
-        ulPass,
-        setulPass,
+
         fetchOneData,
         uName,
         setuName,
@@ -302,15 +354,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         handleUpdate,
         updateState,
         setUpdateState,
-        name,
-        setName,
-        email,
-        setEmail,
-        phone,
-        setPhone,
-        handleRegister,
-        password,
-        setPassword,
+
         fetchData,
         handleDelete,
         router,
@@ -332,6 +376,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         fetchAtt,
         fetchOneAtt,
         fetchHolidays,
+        handleRegister,
+        load,
+        setLoad,
       }}
     >
       {children}

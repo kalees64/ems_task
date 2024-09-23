@@ -11,12 +11,18 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Icon } from "@iconify/react";
 import React, { useContext, useEffect, useState } from "react";
 import DataContext from "../../../../context/DataContext";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 const Employees = () => {
   //Manage all users state
@@ -37,6 +43,8 @@ const Employees = () => {
     setuEmail,
     setuPhone,
     handleUpdate,
+    load,
+    setLoad,
   } = useContext(DataContext);
 
   //Set the selected user values to the edit form
@@ -65,17 +73,38 @@ const Employees = () => {
     <section className="w-full p-3 px-6">
       <div className="w-full flex justify-between items-center">
         <h2 className="text-lg font-semibold mb-4">All Employees</h2>
-        <button
-          className="bg-cyan-600 p-2 rounded text-white"
+
+        <div
+          className="bg-black p-2 rounded text-white flex gap-2 items-center cursor-pointer"
           onClick={() => {
             setAdminState(!adminState);
             router.push("/register");
           }}
         >
-          Add Employee
-        </button>
+          <Icon icon="gg:add-r" fontSize={25} />
+          <p>Add Employee</p>
+        </div>
       </div>
-      <div className="w-full pt-5 px-6 max-sm:px-1 max-sm:overflow-x-scroll relative">
+      <div className="w-80">
+        <Card className="">
+          <CardContent className="flex pt-4">
+            <div className="flex flex-col justify-center gap-3 ">
+              <h1>Total Employees</h1>
+              <h1 className="font-bold text-xl font-sans">{allUsers.length}</h1>
+            </div>
+            <div className="w-5/12 flex justify-end items-center">
+              <Icon
+                icon="flowbite:users-outline"
+                fontSize={25}
+                className="text-black/50"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      <Card className="w-full mt-5 pt-2 max-sm:px-1 max-sm:overflow-x-scroll relative">
+        <h2 className="text-lg font-semibold ps-2 pb-2 pt-2">Employees List</h2>
+
         <Table>
           <TableHeader>
             <TableRow>
@@ -83,9 +112,7 @@ const Employees = () => {
               <TableHead>Employee Name</TableHead>
               <TableHead>Employee Email</TableHead>
               <TableHead>Employee Phone</TableHead>
-              <TableHead className="text-center" colSpan={2}>
-                Action
-              </TableHead>
+              <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -97,15 +124,14 @@ const Employees = () => {
                     <TableCell>{user.name}</TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.phone}</TableCell>
-                    <TableCell>
+                    <TableCell className="flex items-center gap-3 justify-center">
                       {/* Employee Editing Form */}
                       <Dialog>
                         <DialogTrigger>
                           <Icon
-                            icon="mdi:account-edit-outline"
+                            icon="mage:edit"
                             fontSize={30}
-                            color="white"
-                            className="w-full p-1  bg-lime-500 rounded active:bg-blue-500 cursor-pointer"
+                            className=" cursor-pointer"
                             onClick={async () => {
                               setValues(await getUser(user.id));
                             }}
@@ -159,22 +185,53 @@ const Employees = () => {
                           </form>
                         </DialogContent>
                       </Dialog>
-                    </TableCell>
-                    <TableCell>
-                      <Icon
-                        icon="ic:baseline-delete-forever"
-                        fontSize={30}
-                        className="p-1 w-full bg-red-500 rounded active:bg-yellow-500 cursor-pointer"
-                        color="white"
-                        onClick={async () => {
-                          handleDelete(user.id);
-                          await getUsers();
-                          const users = allUsers.filter(
-                            (data: any) => data.id !== user.id
-                          );
-                          setAllUsers(users);
-                        }}
-                      />
+
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Icon
+                            icon="ic:baseline-delete-forever"
+                            fontSize={30}
+                            className="cursor-pointer"
+                          />
+                        </DialogTrigger>
+                        <DialogContent className="bg-white">
+                          <DialogHeader>
+                            <DialogTitle>
+                              Do you want delete {user.name}?
+                            </DialogTitle>
+                            <DialogDescription>
+                              Click yes to delete
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="flex gap-5">
+                            <DialogClose asChild>
+                              <Button
+                                onClick={async () => {
+                                  setLoad(true);
+                                  const res = await handleDelete(user.id);
+                                  if (res) {
+                                    await getUsers();
+                                    const users = allUsers.filter(
+                                      (data: any) => data.id !== user.id
+                                    );
+                                    setAllUsers(users);
+                                    setLoad(false);
+                                  }
+                                }}
+                                disabled={load}
+                              >
+                                {load && (
+                                  <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+                                )}
+                                Yes
+                              </Button>
+                            </DialogClose>
+                            <DialogClose asChild>
+                              <Button className="bg-red-700">Cancel</Button>
+                            </DialogClose>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </TableCell>
                   </TableRow>
                 );
@@ -186,7 +243,7 @@ const Employees = () => {
             )}
           </TableBody>
         </Table>
-      </div>
+      </Card>
     </section>
   );
 };

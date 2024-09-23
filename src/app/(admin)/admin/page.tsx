@@ -32,7 +32,7 @@ const Admin = () => {
   return (
     <section className="bg-white shadow-md rounded p-4">
       <h2 className="text-lg font-semibold mb-4">Employee Reports</h2>
-      <div className="w-full pt-5 px-6 max-sm:px-1 max-sm:overflow-x-scroll relative">
+      <div className="w-full pt-5  max-sm:px-1 max-sm:overflow-x-scroll relative">
         <Table>
           <TableHeader>
             <TableRow>

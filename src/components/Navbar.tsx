@@ -6,7 +6,9 @@ import axios from "axios";
 import { toast } from "sonner";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -24,11 +26,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const Navbar = ({ allEmps }: { allEmps: any }) => {
   //Get data from the context API
-  const { fetchOneData, API_URI, router, adminState, setAdminState, fetchAtt } =
-    useContext(DataContext);
+  const {
+    fetchOneData,
+    API_URI,
+    router,
+    adminState,
+    setAdminState,
+    fetchAtt,
+    load,
+    setLoad,
+  } = useContext(DataContext);
 
   //States for employee manual attendace form
   const [empid, setEmpid] = useState("");
@@ -84,7 +95,7 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
   return (
     <div className="flex items-center justify-end bg-gray-100 p-4 shadow-md">
       {/* <div>Admin Dashboard</div> */}
-      <div className="space-x-4">
+      <div className="space-x-4 flex gap-3 items-center">
         <Dialog>
           <DialogTrigger asChild>
             <Button>Employee Attendance</Button>
@@ -180,19 +191,47 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
             </form>
           </DialogContent>
         </Dialog>
-        <Button
-          // className="bg-green-500 text-white px-4 py-2 rounded"
-          onClick={() => {
-            localStorage.removeItem("token");
-            router.push("/");
-            setTimeout(() => {
-              toast.info("Logged Out");
-            }, 100);
-            setAdminState(!adminState);
-          }}
-        >
-          Logout
-        </Button>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            {/* <Button>Logout</Button> */}
+            <Icon
+              icon="lucide:log-out"
+              fontSize={35}
+              className="cursor-pointer"
+            />
+          </DialogTrigger>
+          <DialogContent className="bg-white">
+            <DialogHeader>
+              <DialogTitle>Do you want logout?</DialogTitle>
+              <DialogDescription>Click yes to logout</DialogDescription>
+            </DialogHeader>
+            <div className="flex gap-5">
+              <Button
+                onClick={() => {
+                  setLoad(true);
+                  localStorage.removeItem("token");
+                  router.push("/");
+                  setTimeout(() => {
+                    toast.info("Logged Out");
+                  }, 100);
+                  setAdminState(false);
+                  setLoad(false);
+                }}
+                disabled={load}
+                className=""
+              >
+                {load && (
+                  <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+                )}
+                Yes
+              </Button>
+              <DialogClose asChild>
+                <Button className="bg-red-700">Cancel</Button>
+              </DialogClose>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

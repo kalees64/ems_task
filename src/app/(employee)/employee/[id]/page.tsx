@@ -27,6 +27,9 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import DataContext from "../../../../context/DataContext";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { Skeleton } from "@/components/ui/skeleton";
+import axios from "axios";
 
 ChartJS.register(
   BarElement,
@@ -69,14 +72,30 @@ const Employee = () => {
     setuEmail,
     setuPhone,
     handleUpdate,
+    load,
+    setLoad,
   } = useContext(DataContext);
 
   // Fetch user Data
 
+  const getToken = async () => {
+    const token1: any = await localStorage.getItem("token");
+    const token2: any = await JSON.parse(token1);
+    const token = await token2.token;
+    return token;
+  };
+
   const findUser = async () => {
-    const res = await fetchOneData(id);
-    // console.log(res);
-    setUser(res);
+    try {
+      const token = await getToken();
+      const res = await fetchOneData(id);
+      // console.log(res);
+      setUser(res);
+    } catch (error: any) {
+      if (error.status === 403) {
+        router.push("/");
+      }
+    }
   };
 
   // get user attendance
@@ -118,29 +137,73 @@ const Employee = () => {
   //Page startup fuctions
   const startUp = async () => {
     await findUser();
-    await getAtt();
+
     // setValues(user);
   };
   useEffect(() => {
     startUp();
-  }, [findUser, getAtt]);
+  }, [user]);
+  useEffect(() => {
+    // getAtt();
+  }, []);
   return (
     <div className="p-6">
       {/* Logout Button */}
       <div className="flex justify-between mb-6">
         <h1 className="text-2xl font-bold">Employee Dashboard</h1>
-        <Button
-          onClick={() => {
-            localStorage.removeItem("token");
-            router.push("/");
-            setTimeout(() => {
-              toast.info("Logged Out");
-            }, 100);
-          }}
-          className="bg-red-500"
-        >
-          Logout
-        </Button>
+        <div>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Icon
+                icon="lucide:log-out"
+                fontSize={35}
+                className="cursor-pointer"
+              />
+            </DialogTrigger>
+            <DialogContent className="bg-white">
+              <DialogHeader>
+                <DialogTitle>Do you want logout?</DialogTitle>
+                <DialogDescription>Click yes to logout</DialogDescription>
+              </DialogHeader>
+              <div className="flex gap-5">
+                <Button
+                  onClick={async () => {
+                    setLoad(true);
+                    try {
+                      const logout = await axios.post(
+                        `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
+                        {},
+                        { withCredentials: true }
+                      );
+                      console.log(logout);
+                      localStorage.removeItem("token");
+                      router.push("/");
+                      setTimeout(() => {
+                        toast.info("Logged Out");
+                      }, 100);
+                      setLoad(false);
+                    } catch (error: any) {
+                      setLoad(false);
+                      setTimeout(() => {
+                        toast.info(error.message);
+                      }, 100);
+                    }
+                  }}
+                  disabled={load}
+                  className=""
+                >
+                  {load && (
+                    <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+                  )}
+                  Yes
+                </Button>
+                <DialogClose asChild>
+                  <Button className="bg-red-700">Cancel</Button>
+                </DialogClose>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       {/* Section 1: Leave Type Widgets */}
@@ -176,100 +239,111 @@ const Employee = () => {
         </div>
 
         {/* Profile Section */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h3 className="text-xl font-bold mb-4">Profile</h3>
+        {user ? (
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h3 className="text-xl font-bold mb-4">Profile</h3>
 
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Name
-            </label>
-            <h1 className="w-full font-bold">{user.name}</h1>
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Email
-            </label>
-            <h1 className="w-full font-bold">{user.email}</h1>
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Phone
-            </label>
-            <h1 className="w-full font-bold">{user.phone}</h1>
-          </div>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="w-full"
-                onClick={() => {
-                  setUpdateState(!updateState);
-                  setValues(user);
-                }}
+            <div className="mb-4">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Update Profile
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-white">
-              <DialogHeader>
-                <DialogTitle>Update Employee</DialogTitle>
-                <DialogDescription className="hidden">
-                  Edit Form
-                </DialogDescription>
-              </DialogHeader>
-              <form
-                onSubmit={(e) => {
-                  handleUpdate(e, user);
-                }}
+                Name
+              </label>
+              <h1 className="w-full font-bold">{user.name}</h1>
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
-                <div>
-                  <Label>Name</Label>
-                  <Input
-                    type="text"
-                    value={uName}
-                    onChange={(e) => setuName(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <Label>Email</Label>
-                  <Input
-                    type="email"
-                    value={uEmail}
-                    onChange={(e) => setuEmail(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <Label>Phone</Label>
-                  <Input
-                    type="tel"
-                    value={uPhone}
-                    onChange={(e) => setuPhone(e.target.value)}
-                  />
-                </div>
-                <DialogFooter className="pt-3">
-                  <DialogClose asChild>
-                    <Button
-                      type="submit"
-                      // onClick={async () => {
-                      //   await findUser();
-                      // }}
-                    >
-                      Update
-                    </Button>
-                  </DialogClose>
-                </DialogFooter>
-              </form>
-            </DialogContent>
-          </Dialog>
-        </div>
+                Email
+              </label>
+              <h1 className="w-full font-bold">{user.email}</h1>
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Phone
+              </label>
+              <h1 className="w-full font-bold">{user.phone}</h1>
+            </div>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  className="w-full"
+                  onClick={() => {
+                    setUpdateState(!updateState);
+                    setValues(user);
+                  }}
+                >
+                  Update Profile
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="bg-white">
+                <DialogHeader>
+                  <DialogTitle>Update Employee</DialogTitle>
+                  <DialogDescription className="hidden">
+                    Edit Form
+                  </DialogDescription>
+                </DialogHeader>
+                <form
+                  onSubmit={async (e) => {
+                    handleUpdate(e, user);
+                  }}
+                >
+                  <div>
+                    <Label>Name</Label>
+                    <Input
+                      type="text"
+                      value={uName}
+                      onChange={(e) => setuName(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label>Email</Label>
+                    <Input
+                      type="email"
+                      value={uEmail}
+                      readOnly
+                      disabled
+                      onChange={(e) => setuEmail(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label>Phone</Label>
+                    <Input
+                      type="tel"
+                      value={uPhone}
+                      onChange={(e) => setuPhone(e.target.value)}
+                    />
+                  </div>
+                  <DialogFooter className="pt-3">
+                    <DialogClose asChild>
+                      <Button
+                        type="submit"
+                        // onClick={async () => {
+                        //   await findUser();
+                        // }}
+                      >
+                        Update
+                      </Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
+        ) : (
+          <Skeleton className="p-2 flex flex-col gap-3 justify-center px-3">
+            <Skeleton className="w-full h-20 rounded-sm" />
+            <Skeleton className="w-full h-20 rounded-sm" />
+            <Skeleton className="w-full h-20 rounded-sm" />
+            <Skeleton className="w-full h-20 rounded-sm" />
+          </Skeleton>
+        )}
       </div>
 
       {/* Section 3: Leave Request Form */}
@@ -277,6 +351,7 @@ const Employee = () => {
         <h3 className="text-xl font-bold mb-4">Request Leave</h3>
         <form
           onSubmit={(e) => {
+            setLoad(true);
             handelLeaveMail(e, user);
           }}
         >
@@ -334,7 +409,10 @@ const Employee = () => {
               rows={4}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={load}>
+            {load && (
+              <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+            )}
             Submit Request
           </Button>
         </form>

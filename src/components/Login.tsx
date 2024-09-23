@@ -1,113 +1,103 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import DataContext from "../context/DataContext";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Toaster } from "sonner";
-import FormInput from "./form/formInput";
-import TextAreaInput from "./form/textAreaInput";
-import Form from "./form/form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 const Login = () => {
   //Get Data from the context API
-  const { handleLogin, ulPhone, setulPhone, ulPass, setulPass } =
-    useContext(DataContext);
+  const { handleLogin, load, setLoad } = useContext(DataContext);
+
+  //Form schema
+  const loginSchema = z
+    .object({
+      email: z.string().email("Please enter a valid email address"),
+      password: z
+        .string()
+        .min(6, { message: "Password length between 6 to 16" })
+        .max(16, { message: "Password length between 6 to 16" }),
+    })
+    .required();
+
+  // Use form declaration
+  const form = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  //Submit function
+  const formSubmit = (data: any) => {
+    setLoad(true);
+    handleLogin(data);
+    form.reset();
+  };
 
   return (
     <div className="w-full h-screen flex items-center justify-center  bg-cover">
       <div className="w-96 mx-auto p-4 border max-sm:w-72 rounded shadow-2xl shadow-black bg-white/60">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        <form
-          onSubmit={(e) => {
-            handleLogin(e);
-          }}
-        >
-          {/* Phone Input */}
-          {/* <div className="mb-4">
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Phone Number
-            </label>
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="1234567890"
-              value={ulPhone}
-              onChange={(e) => {
-                setulPhone(e.target.value);
-              }}
-              className="w-full"
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(formSubmit)}>
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="text" {...field} placeholder="abc@gmail.com" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div> */}
-
-          {/* Password Input */}
-          {/* <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Password
-            </label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={ulPass}
-              onChange={(e) => {
-                setulPass(e.target.value);
-              }}
-              className="w-full"
+            <FormField
+              name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} placeholder="••••••••" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div> */}
-
-          {/* Test Input */}
-          <div className="mb-6">
-            <FormInput
-              name="Email"
-              type="email"
-              placeholder="abc@gmail.com"
-              value={ulPhone}
-              onChange={setulPhone}
-            />
-          </div>
-
-          {/* Test Input */}
-          <div className="mb-6">
-            <FormInput
-              name="Password"
-              type="password"
-              placeholder="••••••••"
-              value={ulPass}
-              onChange={setulPass}
-            />
-          </div>
-
-          {/* Test Input */}
-          {/* <div className="mb-6">
-        <FormInput
-          name="Testing"
-          type="text"
-          placeholder="••••••••"
-          value={str}
-          onChange={setStr}
-          minLength={10}
-        />
-      </div> */}
-
-          {/* Submit Button */}
-          <Button type="submit" className="w-full">
-            Login
-          </Button>
-          <p className="pt-2">
-            Already you have an account?
-            <Link href="/register" className="text-red-500">
-              {" "}
-              Register
-            </Link>
-          </p>
-        </form>
+            <div className="pt-3 w-full">
+              <Button type="submit" className="w-full" disabled={load}>
+                {load && (
+                  <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+                )}
+                Login
+              </Button>
+            </div>
+            <div>
+              <p className="pt-2">
+                Already you have an account?
+                <Link href="/register" className="text-red-500">
+                  Register
+                </Link>
+              </p>
+            </div>
+          </form>
+        </Form>
       </div>
       <Toaster richColors position="top-center" />
     </div>

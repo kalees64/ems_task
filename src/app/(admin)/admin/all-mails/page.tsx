@@ -33,7 +33,7 @@ const LeaveMails = () => {
       <div className="w-full flex justify-between items-center">
         <h2 className="text-lg font-semibold mb-4">Employees Leave Mails</h2>
       </div>
-      <div className="w-full pt-5 px-6 max-sm:px-1 max-sm:overflow-x-scroll">
+      <div className="w-full pt-5  max-sm:px-1 max-sm:overflow-x-scroll">
         <Table>
           <TableHeader>
             <TableRow>

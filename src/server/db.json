@@ -74,10 +74,11 @@
       "leave_from": "19/09/2024",
       "leave_to": "26/09/2024",
       "reason": "Leave for Festival\n",
-      "new": true,
+      "new": false,
       "created_date": "16/09/2024",
-      "modified_date": "16/09/2024",
-      "total_days": 7
+      "modified_date": "20/09/2024",
+      "total_days": 7,
+      "status": true
     },
     {
       "id": "3861",
@@ -93,6 +94,34 @@
       "total_days": 10,
       "status": false,
       "r_reason": "No weekend"
+    },
+    {
+      "id": "799f",
+      "emp_id": "d1b7d57a-98be-4908-aaa0-918b16ac77c3",
+      "name": "Kaleeswaran V",
+      "email": "vkalees64@gmail.com",
+      "leave_from": "25/09/2024",
+      "leave_to": "28/09/2024",
+      "reason": "Sick Leave",
+      "new": false,
+      "created_date": "20/09/2024",
+      "modified_date": "20/09/2024",
+      "total_days": 3,
+      "status": false,
+      "r_reason": "No Leave For You"
+    },
+    {
+      "id": "2c2c",
+      "emp_id": "d1b7d57a-98be-4908-aaa0-918b16ac77c3",
+      "name": "Kaleeswaran ",
+      "email": "vkalees64@gmail.com",
+      "leave_from": "20/09/2024",
+      "leave_to": "25/09/2024",
+      "reason": "Medical Leave",
+      "new": true,
+      "created_date": "20/09/2024",
+      "modified_date": "20/09/2024",
+      "total_days": 5
     }
   ],
   "attendances": [
@@ -268,14 +297,14 @@
   "holidays": [
     {
       "id": "8631",
-      "name": "Diwali Fest",
-      "date": "19/09/2024",
+      "name": "Diwali",
+      "date": "20/09/2024",
       "publicHoliday": true
     },
     {
-      "id": "a19e",
-      "name": "Power Cut ",
-      "date": "19/09/2024",
+      "id": "cad4",
+      "name": "Power Cut",
+      "date": "28/09/2024",
       "publicHoliday": false
     }
   ]

@@ -28,8 +28,14 @@ const LeaveMails = () => {
   const [mail, setMail] = useState({});
 
   //Get Data from context API
-  const { fetchMails, handleAprove, fetchOneMail, handleReject } =
-    useContext(DataContext);
+  const {
+    fetchMails,
+    handleAprove,
+    fetchOneMail,
+    handleReject,
+    load,
+    setLoad,
+  } = useContext(DataContext);
 
   //Get Mails function
   const getMails = async () => {
@@ -68,7 +74,7 @@ const LeaveMails = () => {
               className="animate-ping inline-block"
             />
           </div>
-          <div className="w-full pt-5 px-6 max-sm:px-1 max-sm:overflow-x-scroll pb-4">
+          <div className="w-full pt-5  max-sm:px-1 max-sm:overflow-x-scroll pb-4">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -103,25 +109,27 @@ const LeaveMails = () => {
                         <TableCell>{mail.leave_from}</TableCell>
                         <TableCell>{mail.leave_to}</TableCell>
                         <TableCell>{mail.reason}</TableCell>
-                        <TableCell>
+                        <TableCell className="flex items-center gap-3">
                           <Icon
                             icon="hugeicons:tick-04"
                             fontSize={34}
-                            color="white"
-                            className="p-1 bg-lime-600 rounded "
+                            className="cursor-pointer"
                             onClick={() => {
                               handleAprove(mail);
+                              const remain = newMails.filter(
+                                (val: any) => val.id === mail.id
+                              );
+                              setNewMails(remain);
                             }}
                           />
-                        </TableCell>
-                        <TableCell>
+
                           {/* Mail Rejection form */}
                           <Dialog>
                             <DialogTrigger>
                               <Icon
-                                icon="material-symbols:close-small-rounded"
+                                icon="fluent:mail-dismiss-24-regular"
                                 fontSize={35}
-                                className="p-1 bg-red-600 rounded "
+                                className="cursor-pointer "
                                 onClick={async () => {
                                   await getOneMail(mail.id);
                                 }}
@@ -133,6 +141,7 @@ const LeaveMails = () => {
                               </DialogHeader>
                               <form
                                 onSubmit={(e) => {
+                                  setLoad(true);
                                   handleReject(e, mail, reason);
                                 }}
                               >
@@ -170,7 +179,12 @@ const LeaveMails = () => {
                                   />
                                 </div>
                                 <DialogFooter className="pt-3">
-                                  <Button type="submit">Send</Button>
+                                  <Button type="submit" disabled={load}>
+                                    {load && (
+                                      <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+                                    )}
+                                    Send
+                                  </Button>
                                 </DialogFooter>
                               </form>
                             </DialogContent>
