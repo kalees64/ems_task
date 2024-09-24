@@ -242,8 +242,18 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         phone: uPhone,
         password: user.password,
         dob: dob ? dob : user.dob,
-        ...user,
+        role: {
+          type: user.role.type,
+          title: user.role.title,
+        },
+        total_leaves: user.total_leaves,
+        pending_leaves: user.pending_leaves,
+        casual_leaves: user.casual_leaves,
+        sick_leaves: user.sick_leaves,
+        paid_leaves: user.paid_leaves,
+        pay_offs: user.pay_offs,
       };
+      console.log(newData);
 
       const res = await axios.put(
         `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/users/${user.id}`,

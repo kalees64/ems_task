@@ -61,9 +61,9 @@ const Holidays = () => {
     }
     const add = await axios.post(
       `${process.env.NEXT_PUBLIC_JSON_SERVER_API_URL}/holidays`,
-      { ...newHoliday }
+      { name, date: hDate, publicHoliday }
     );
-    await startup();
+
     setLoad(false);
     setTimeout(() => {
       toast.success("Holiday Added");
@@ -72,6 +72,7 @@ const Holidays = () => {
     setDate("");
     setPublicHoliday(true);
     setLoad(false);
+    await startup();
   };
 
   //Update Holiday Form

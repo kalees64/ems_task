@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/select";
 import { format } from "date-fns";
 import Calendar from "@/components/Calender";
+import { start } from "repl";
 
 ChartJS.register(
   BarElement,
@@ -114,7 +115,7 @@ const Employee = () => {
           12 - Number(user.sick_leaves),
           12 - Number(user.paid_leaves),
           user.pay_offs,
-          30,
+          12,
         ],
         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
         borderWidth: 1,
@@ -170,7 +171,7 @@ const Employee = () => {
 
   useEffect(() => {
     startUp();
-  }, [user]);
+  }, [handleUpdate, handelLeaveMail]);
   return (
     <div className="p-6 bg-[#f1f5f9] text-black">
       {/* Logout Button */}
@@ -196,25 +197,11 @@ const Employee = () => {
                 <Button
                   onClick={async () => {
                     setLoad(true);
-                    try {
-                      // const logout = await axios.post(
-                      //   `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
-                      //   {},
-                      //   { withCredentials: true }
-                      // );
-                      // console.log(logout);
-                      // localStorage.removeItem("token");
-                      router.push("/");
-                      setTimeout(() => {
-                        toast.info("Logged Out");
-                      }, 100);
-                      setLoad(false);
-                    } catch (error: any) {
-                      setLoad(false);
-                      setTimeout(() => {
-                        toast.info(error.message);
-                      }, 100);
-                    }
+                    router.push("/");
+                    setTimeout(() => {
+                      toast.info("Logged Out");
+                    }, 100);
+                    setLoad(false);
                   }}
                   disabled={load}
                   className=""
@@ -250,36 +237,40 @@ const Employee = () => {
       {/* Section 1: Leave Type Widgets */}
       <div className="grid grid-cols-6 gap-4 mb-8 max-md:grid-cols-2 max-lg:grid-cols-3">
         <div className="p-4 bg-white shadow-md rounded-lg text-center">
-          <h3 className="text-lg font-semibold">Total Leaves</h3>
+          <h3 className="text-lg font-semibold text-[#637085]">Total Leaves</h3>
           <p className="text-2xl font-bold">{user.total_leaves}</p>
-          <p className="text-sm">Days</p>
+          <p className="text-sm text-[#637085]">Days</p>
         </div>
         <div className="p-4 bg-white shadow-md rounded-lg text-center">
-          <h3 className="text-lg font-semibold">Pending Leaves</h3>
+          <h3 className="text-lg font-semibold text-[#637085]">
+            Pending Leaves
+          </h3>
           <p className="text-2xl font-bold">{user.pending_leaves}</p>
-          <p className="text-sm">Days</p>
+          <p className="text-sm text-[#637085]">Days</p>
         </div>
         <div className="p-4 bg-white shadow-md rounded-lg text-center">
-          <h3 className="text-lg font-semibold">Casual Leaves</h3>
+          <h3 className="text-lg font-semibold text-[#637085]">
+            Casual Leaves
+          </h3>
           <p className="text-2xl font-bold">
             {12 - Number(user.casual_leaves)}
           </p>
-          <p className="text-sm">Days</p>
+          <p className="text-sm text-[#637085]">Days</p>
         </div>
         <div className="p-4 bg-white shadow-md rounded-lg text-center">
-          <h3 className="text-lg font-semibold">Sick Leaves</h3>
+          <h3 className="text-lg font-semibold text-[#637085]">Sick Leaves</h3>
           <p className="text-2xl font-bold">{12 - Number(user.sick_leaves)}</p>
-          <p className="text-sm">Days</p>
+          <p className="text-sm text-[#637085]">Days</p>
         </div>
         <div className="p-4 bg-white shadow-md rounded-lg text-center">
-          <h3 className="text-lg font-semibold">Paid Leaves</h3>
+          <h3 className="text-lg font-semibold text-[#637085]">Paid Leaves</h3>
           <p className="text-2xl font-bold">{12 - Number(user.paid_leaves)}</p>
-          <p className="text-sm">Days</p>
+          <p className="text-sm text-[#637085]">Days</p>
         </div>
         <div className="p-4 bg-white shadow-md rounded-lg text-center">
-          <h3 className="text-lg font-semibold">Pay OFFs</h3>
+          <h3 className="text-lg font-semibold text-[#637085]">Pay OFFs</h3>
           <p className="text-2xl font-bold">{user.pay_offs}</p>
-          <p className="text-sm">Days</p>
+          <p className="text-sm text-[#637085]">Days</p>
         </div>
       </div>
 
@@ -290,145 +281,15 @@ const Employee = () => {
           <h3 className="text-xl font-bold mb-4">Leave Overview</h3>
           <Bar data={chartData} />
         </div>
-
-        {/* Profile Section */}
-        {user ? (
-          <div className="bg-white shadow-md rounded-lg p-6">
-            <h3 className="text-xl font-bold mb-4">Profile</h3>
-
-            <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Name
-              </label>
-              <h1 className="w-full font-bold">{user.name}</h1>
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Email
-              </label>
-              <h1 className="w-full font-bold">{user.email}</h1>
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="phone"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Phone
-              </label>
-              <h1 className="w-full font-bold">{user.phone}</h1>
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="phone"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                DOB
-              </label>
-              <h1 className="w-full font-bold">
-                {user.dob ? format(user.dob, "dd-MM-yyy") : "Not Updated"}
-              </h1>
-            </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  className="w-full"
-                  onClick={() => {
-                    setUpdateState(!updateState);
-                    setValues(user);
-                  }}
-                >
-                  Update Profile
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="bg-white text-black max-sm:w-11/12">
-                <DialogHeader>
-                  <DialogTitle>Update Employee</DialogTitle>
-                  <DialogDescription className="hidden">
-                    Edit Form
-                  </DialogDescription>
-                </DialogHeader>
-                <form
-                  onSubmit={async (e) => {
-                    handleUpdate(e, user);
-                  }}
-                >
-                  <div>
-                    <Label>Name</Label>
-                    <Input
-                      type="text"
-                      value={uName}
-                      onChange={(e) => setuName(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Label>Email</Label>
-                    <Input
-                      type="email"
-                      value={uEmail}
-                      readOnly
-                      disabled
-                      onChange={(e) => setuEmail(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Label>Phone</Label>
-                    <Input
-                      type="tel"
-                      value={uPhone}
-                      onChange={(e) => setuPhone(e.target.value)}
-                    />
-                  </div>
-                  {!user.dob && (
-                    <div>
-                      <Label>DOB</Label>
-                      <Input
-                        type="date"
-                        value={dob}
-                        onChange={(e) => setDob(e.target.value)}
-                      />
-                    </div>
-                  )}
-                  <DialogFooter className="pt-3">
-                    <DialogClose asChild>
-                      <Button
-                        type="submit"
-                        // onClick={async () => {
-                        //   await findUser();
-                        // }}
-                      >
-                        Update
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </form>
-              </DialogContent>
-            </Dialog>
-          </div>
-        ) : (
-          <Skeleton className="p-2 flex flex-col gap-3 justify-center px-3">
-            <Skeleton className="w-full h-20 rounded-sm" />
-            <Skeleton className="w-full h-20 rounded-sm" />
-            <Skeleton className="w-full h-20 rounded-sm" />
-            <Skeleton className="w-full h-20 rounded-sm" />
-          </Skeleton>
-        )}
+        <Calendar
+          selectedDate={selectedDate}
+          onDateClick={handleDateClick}
+          holidays={holi}
+        />
       </div>
 
       {/* Section 3: Leave Request Form */}
       <div className="grid grid-cols-2 gap-8 mb-8 max-lg:grid-cols-1">
-        <div className="w-full">
-          <Calendar
-            selectedDate={selectedDate}
-            onDateClick={handleDateClick}
-            holidays={holi}
-          />
-        </div>
         <div className="bg-white shadow-md rounded-lg p-6 ">
           <h3 className="text-xl font-bold mb-4">Request Leave</h3>
           <form
@@ -517,13 +378,149 @@ const Employee = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={load}>
+            <Button
+              type="submit"
+              className="w-full bg-[#6343d8] hover:bg-[#593cc1]"
+              disabled={load}
+            >
               {load && (
                 <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
               )}
               Submit Request
             </Button>
           </form>
+        </div>
+
+        <div className="w-full">
+          {/* Profile Section */}
+          {user ? (
+            <div className="bg-white shadow-md rounded-lg p-6">
+              <h3 className="text-xl font-bold mb-4">Profile</h3>
+
+              <div className="mb-4">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Name
+                </label>
+                <h1 className="w-full font-bold">{user.name}</h1>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Email
+                </label>
+                <h1 className="w-full font-bold">{user.email}</h1>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Phone
+                </label>
+                <h1 className="w-full font-bold">{user.phone}</h1>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  DOB
+                </label>
+                <h1 className="w-full font-bold">
+                  {user.dob ? format(user.dob, "dd-MM-yyy") : "Not Updated"}
+                </h1>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    className="w-full bg-[#6343d8] hover:bg-[#593cc1]"
+                    onClick={() => {
+                      setUpdateState(!updateState);
+                      setValues(user);
+                    }}
+                  >
+                    Update Profile
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-white text-black max-sm:w-11/12">
+                  <DialogHeader>
+                    <DialogTitle>Update Employee</DialogTitle>
+                    <DialogDescription className="hidden">
+                      Edit Form
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form
+                    onSubmit={async (e) => {
+                      handleUpdate(e, user);
+                    }}
+                  >
+                    <div>
+                      <Label>Name</Label>
+                      <Input
+                        type="text"
+                        value={uName}
+                        onChange={(e) => setuName(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Label>Email</Label>
+                      <Input
+                        type="email"
+                        value={uEmail}
+                        readOnly
+                        disabled
+                        onChange={(e) => setuEmail(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Label>Phone</Label>
+                      <Input
+                        type="tel"
+                        value={uPhone}
+                        onChange={(e) => setuPhone(e.target.value)}
+                      />
+                    </div>
+                    {!user.dob && (
+                      <div>
+                        <Label>DOB</Label>
+                        <Input
+                          type="date"
+                          value={dob}
+                          onChange={(e) => setDob(e.target.value)}
+                        />
+                      </div>
+                    )}
+                    <DialogFooter className="pt-3">
+                      <DialogClose asChild>
+                        <Button
+                          type="submit"
+                          className="bg-[#6343d8] hover:bg-[#593cc1]"
+                          onClick={async () => {
+                            await findUser();
+                            await startUp();
+                          }}
+                        >
+                          Update
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            </div>
+          ) : (
+            <Skeleton className="p-2 flex flex-col gap-3 justify-center px-3">
+              <Skeleton className="w-full h-20 rounded-sm" />
+              <Skeleton className="w-full h-20 rounded-sm" />
+              <Skeleton className="w-full h-20 rounded-sm" />
+              <Skeleton className="w-full h-20 rounded-sm" />
+            </Skeleton>
+          )}
         </div>
       </div>
       <Toaster position="top-center" richColors />

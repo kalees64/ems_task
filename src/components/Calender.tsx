@@ -57,7 +57,7 @@ const Calendar: React.FC<CalendarProps> = ({
 
     for (let i = 0; i < 7; i++) {
       days.push(
-        <div key={i} className="text-center text-gray-500 font-medium">
+        <div key={i} className="text-center text-gray-500 font-medium mb-2">
           {format(addDays(startDate, i), dateFormat)}
         </div>
       );
@@ -89,19 +89,23 @@ const Calendar: React.FC<CalendarProps> = ({
 
         days.push(
           <div
-            className={`px-2 rounded-lg py-2 text-center cursor-pointer ${
-              !isSameMonth(day, monthStart)
-                ? "text-gray-300"
-                : isHoliday
-                ? "bg-red-500 text-white" // Holiday date styling
-                : isSameDay(day, selectedDate)
-                ? "bg-blue-500 text-white"
-                : "hover:bg-blue-100"
-            }`}
+            className={`py-4 rounded-xl  text-center cursor-pointer `}
             key={day.toString()}
             onClick={() => onDateClick(cloneDay)}
           >
-            <span>{formattedDate}</span>
+            <span
+              className={`size-6  p-3 rounded-full ${
+                !isSameMonth(day, monthStart)
+                  ? "text-gray-300"
+                  : isHoliday
+                  ? "bg-red-500 text-white" // Holiday date styling
+                  : isSameDay(day, selectedDate)
+                  ? "bg-blue-500 text-white"
+                  : "hover:bg-blue-100"
+              }`}
+            >
+              {formattedDate.length < 2 ? "0" + formattedDate : formattedDate}
+            </span>
           </div>
         );
         day = addDays(day, 1);
@@ -118,7 +122,7 @@ const Calendar: React.FC<CalendarProps> = ({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-lg bg-white">
+    <div className="w-full  mx-auto p-4 border rounded-lg shadow-lg bg-white">
       {renderHeader()}
       {renderDays()}
       {renderCells()}
