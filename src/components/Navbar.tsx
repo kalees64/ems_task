@@ -110,7 +110,7 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
         <h1 className="lg:hidden font-bold">Admin</h1>
       </div>
       <div className="flex items-center justify-end space-x-4  ">
-        <Dialog>
+        {/* <Dialog>
           <DialogTrigger asChild>
             <Button className="bg-[#6343d8] hover:bg-[#593cc1]">
               Employee Attendance
@@ -209,7 +209,7 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
               </DialogFooter>
             </form>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
 
         <Dialog>
           <DialogTrigger asChild>

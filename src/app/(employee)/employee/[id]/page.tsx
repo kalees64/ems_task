@@ -172,7 +172,7 @@ const Employee = () => {
     startUp();
   }, [user]);
   return (
-    <div className="p-6 bg-white text-black">
+    <div className="p-6 bg-[#f1f5f9] text-black">
       {/* Logout Button */}
       <div className="flex justify-between mb-6">
         <h1 className="text-2xl font-bold max-md:text-xl max-sm:text-lg">
@@ -249,34 +249,34 @@ const Employee = () => {
 
       {/* Section 1: Leave Type Widgets */}
       <div className="grid grid-cols-6 gap-4 mb-8 max-md:grid-cols-2 max-lg:grid-cols-3">
-        <div className="p-4 bg-gray-100 shadow-md rounded-lg text-center">
+        <div className="p-4 bg-white shadow-md rounded-lg text-center">
           <h3 className="text-lg font-semibold">Total Leaves</h3>
           <p className="text-2xl font-bold">{user.total_leaves}</p>
           <p className="text-sm">Days</p>
         </div>
-        <div className="p-4 bg-gray-100 shadow-md rounded-lg text-center">
+        <div className="p-4 bg-white shadow-md rounded-lg text-center">
           <h3 className="text-lg font-semibold">Pending Leaves</h3>
           <p className="text-2xl font-bold">{user.pending_leaves}</p>
           <p className="text-sm">Days</p>
         </div>
-        <div className="p-4 bg-gray-100 shadow-md rounded-lg text-center">
+        <div className="p-4 bg-white shadow-md rounded-lg text-center">
           <h3 className="text-lg font-semibold">Casual Leaves</h3>
           <p className="text-2xl font-bold">
             {12 - Number(user.casual_leaves)}
           </p>
           <p className="text-sm">Days</p>
         </div>
-        <div className="p-4 bg-gray-100 shadow-md rounded-lg text-center">
+        <div className="p-4 bg-white shadow-md rounded-lg text-center">
           <h3 className="text-lg font-semibold">Sick Leaves</h3>
           <p className="text-2xl font-bold">{12 - Number(user.sick_leaves)}</p>
           <p className="text-sm">Days</p>
         </div>
-        <div className="p-4 bg-gray-100 shadow-md rounded-lg text-center">
+        <div className="p-4 bg-white shadow-md rounded-lg text-center">
           <h3 className="text-lg font-semibold">Paid Leaves</h3>
           <p className="text-2xl font-bold">{12 - Number(user.paid_leaves)}</p>
           <p className="text-sm">Days</p>
         </div>
-        <div className="p-4 bg-gray-100 shadow-md rounded-lg text-center">
+        <div className="p-4 bg-white shadow-md rounded-lg text-center">
           <h3 className="text-lg font-semibold">Pay OFFs</h3>
           <p className="text-2xl font-bold">{user.pay_offs}</p>
           <p className="text-sm">Days</p>
