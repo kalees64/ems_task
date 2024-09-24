@@ -64,12 +64,14 @@ const LeaveMails = () => {
     getMails();
   }, [fetchOneMail]);
   return (
-    <section className="bg-white shadow-md rounded p-4">
+    <section className="bg-white rounded-xl shadow  p-4">
       <div className="flex gap-3 pb-2">
         <Link
           href="/admin/mails"
           className={`p-2 border rounded-md active:bg-blue-500 ${
-            newState ? "bg-black text-white" : "bg-white text-black"
+            newState
+              ? "bg-[#4b2199] hover:bg-[#6f42c1] text-white"
+              : "bg-white text-black shadow shadow-[#4b2199] border border-[#007bff]"
           }`}
           onClick={() => {
             setNewState(true);
@@ -80,7 +82,9 @@ const LeaveMails = () => {
         <Link
           href="/admin/all-mails"
           className={`p-2 border rounded-md active:bg-blue-500 ${
-            !newState ? "bg-black text-white" : "bg-white text-black"
+            !newState
+              ? "bg-[#4b2199] hover:bg-[#6f42c1] text-white"
+              : "bg-white text-black shadow shadow-[#4b2199] border border-[#007bff]"
           }`}
           onClick={() => {
             setNewState(false);
@@ -107,15 +111,34 @@ const LeaveMails = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>S.no</TableHead>
-                  <TableHead>Employee Name</TableHead>
-                  <TableHead>Employee Email</TableHead>
-                  <TableHead>Request From</TableHead>
-                  <TableHead>Total Days</TableHead>
-                  <TableHead>Leave From</TableHead>
-                  <TableHead>Leave To</TableHead>
-                  <TableHead>Reason for the Leave</TableHead>
-                  <TableHead colSpan={2} className="text-center">
+                  <TableHead className="text-[#4b2199] font-bold">
+                    S.no
+                  </TableHead>
+                  <TableHead className="text-[#4b2199] font-bold">
+                    Employee Name
+                  </TableHead>
+                  <TableHead className="text-[#4b2199] font-bold">
+                    Employee Email
+                  </TableHead>
+                  <TableHead className="text-[#4b2199] font-bold">
+                    Request From
+                  </TableHead>
+                  <TableHead className="text-[#4b2199] font-bold">
+                    Total Days
+                  </TableHead>
+                  <TableHead className="text-[#4b2199] font-bold">
+                    Leave From
+                  </TableHead>
+                  <TableHead className="text-[#4b2199] font-bold">
+                    Leave To
+                  </TableHead>
+                  <TableHead className="text-[#4b2199] font-bold">
+                    Reason for the Leave
+                  </TableHead>
+                  <TableHead
+                    className="text-[#4b2199] font-bold text-center"
+                    colSpan={2}
+                  >
                     Action
                   </TableHead>
                 </TableRow>
@@ -164,7 +187,7 @@ const LeaveMails = () => {
                                 }}
                               />
                             </DialogTrigger>
-                            <DialogContent className="bg-white text-black max-sm:w-11/12">
+                            <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
                               <DialogHeader>
                                 <h1>Email Rejection Form</h1>
                               </DialogHeader>
@@ -208,9 +231,13 @@ const LeaveMails = () => {
                                   />
                                 </div>
                                 <DialogFooter className="pt-3">
-                                  <Button type="submit" disabled={load}>
+                                  <Button
+                                    type="submit"
+                                    disabled={load}
+                                    className="bg-[#4b2199] hover:bg-[#6f42c1]"
+                                  >
                                     {load && (
-                                      <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
+                                      <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2 "></span>
                                     )}
                                     Send
                                   </Button>

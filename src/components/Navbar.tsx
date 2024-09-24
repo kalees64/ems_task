@@ -96,7 +96,7 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
     setAttDate("");
   };
   return (
-    <div className="flex items-center justify-between bg-gray-100 p-4 shadow-md text-black relative">
+    <div className="flex items-center justify-between bg-[#007bff] p-4 shadow-md text-black relative">
       {/* <div>Admin Dashboard</div> */}
       <div className="space-x-4 flex items-center">
         <Icon
@@ -112,10 +112,12 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
       <div className="flex items-center justify-end space-x-4  ">
         <Dialog>
           <DialogTrigger asChild>
-            <Button>Employee Attendance</Button>
+            <Button className="bg-[#4b2199] hover:bg-[#6f42c1]">
+              Employee Attendance
+            </Button>
           </DialogTrigger>
 
-          <DialogContent className="bg-white text-black max-sm:w-11/12">
+          <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
             <form
               onSubmit={(e) => {
                 handleSubmit(e);
@@ -198,7 +200,10 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
                 </Select>
               </div>
               <DialogFooter className="pt-3">
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full bg-[#4b2199] hover:bg-[#6f42c1]"
+                >
                   POST
                 </Button>
               </DialogFooter>
@@ -213,9 +218,10 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
               icon="lucide:log-out"
               fontSize={35}
               className="cursor-pointer"
+              color="#4b2199"
             />
           </DialogTrigger>
-          <DialogContent className="bg-white text-black max-sm:w-11/12">
+          <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
             <DialogHeader>
               <DialogTitle>Do you want logout?</DialogTitle>
               <DialogDescription>Click yes to logout</DialogDescription>
@@ -233,7 +239,7 @@ const Navbar = ({ allEmps }: { allEmps: any }) => {
                   setLoad(false);
                 }}
                 disabled={load}
-                className=""
+                className="bg-[#4b2199] hover:bg-[#6f42c1]"
               >
                 {load && (
                   <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>

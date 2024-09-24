@@ -76,7 +76,7 @@ const Employees = () => {
         <h2 className="text-lg font-semibold ">All Employees</h2>
 
         <div
-          className="bg-black p-2 rounded text-white flex gap-2 items-center cursor-pointer"
+          className="bg-[#4b2199] hover:bg-[#6f42c1] p-2 rounded text-white flex gap-2 items-center cursor-pointer"
           onClick={() => {
             setAdminState(!adminState);
             router.push("/register");
@@ -87,7 +87,7 @@ const Employees = () => {
         </div>
       </div>
       <div className="w-80">
-        <Card className="">
+        <Card className=" shadow shadow-[#4b2199] border border-[#007bff]">
           <CardContent className="flex pt-4">
             <div className="flex flex-col justify-center gap-3 ">
               <h1>Total Employees</h1>
@@ -98,22 +98,31 @@ const Employees = () => {
                 icon="flowbite:users-outline"
                 fontSize={25}
                 className="text-black/50"
+                color="#4b2199"
               />
             </div>
           </CardContent>
         </Card>
       </div>
-      <Card className="w-full mt-5 pt-2 max-sm:px-1  relative px-4">
+      <Card className="w-full mt-5 pt-2 max-sm:px-1  relative px-4 shadow ">
         <h2 className="text-lg font-semibold ps-2 pb-2 pt-2">Employees List</h2>
 
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>S.No</TableHead>
-              <TableHead>Employee Name</TableHead>
-              <TableHead>Employee Email</TableHead>
-              <TableHead>Employee Phone</TableHead>
-              <TableHead className="text-center">Action</TableHead>
+              <TableHead className="text-[#4b2199] font-bold">S.No</TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Employee Email
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Employee Phone
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Employee Name
+              </TableHead>
+              <TableHead className="text-[#4b2199] text-center font-bold">
+                Action
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -133,12 +142,13 @@ const Employees = () => {
                             icon="mage:edit"
                             fontSize={30}
                             className=" cursor-pointer"
+                            color="#4b2199"
                             onClick={async () => {
                               setValues(await getUser(user.id));
                             }}
                           />
                         </DialogTrigger>
-                        <DialogContent className="bg-white text-black max-sm:w-11/12">
+                        <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
                           <DialogHeader>
                             <h1>Employee Update Form</h1>
                           </DialogHeader>
@@ -189,7 +199,7 @@ const Employees = () => {
                               <input
                                 type="submit"
                                 value="Update"
-                                className="w-full h-10  text-lg bg-blue-500 rounded cursor-pointer text-white"
+                                className="w-full h-10  text-lg bg-[#4b2199] hover:bg-[#6f42c1] rounded cursor-pointer text-white"
                               />
                             </DialogClose>
                           </form>
@@ -202,9 +212,10 @@ const Employees = () => {
                             icon="ic:baseline-delete-forever"
                             fontSize={30}
                             className="cursor-pointer"
+                            color="#4b2199"
                           />
                         </DialogTrigger>
-                        <DialogContent className="bg-white text-black max-sm:w-11/12">
+                        <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
                           <DialogHeader>
                             <DialogTitle>
                               Do you want delete {user.name}?
@@ -216,6 +227,7 @@ const Employees = () => {
                           <div className="flex gap-5">
                             <DialogClose asChild>
                               <Button
+                                className="bg-[#4b2199] hover:bg-[#6f42c1]"
                                 onClick={async () => {
                                   setLoad(true);
                                   const res = await handleDelete(user.id);

@@ -28,19 +28,31 @@ const Admin = () => {
     getUsers();
   }, [fetchData]);
   return (
-    <section className="bg-white shadow-md rounded p-4 text-black">
+    <section className="bg-white rounded-xl p-4 text-black shadow ">
       <h2 className="text-lg font-semibold mb-4">Employee Reports</h2>
       <div className="w-full pt-5  max-sm:px-1  relative">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>S.no</TableHead>
-              <TableHead>Employee Name</TableHead>
-              <TableHead>Employee Email</TableHead>
-              <TableHead>Casual Leaves</TableHead>
-              <TableHead>Sick Leaves</TableHead>
-              <TableHead>Paid Leaves</TableHead>
-              <TableHead>Pending Leaves</TableHead>
+              <TableHead className="text-[#4b2199] font-bold">S.no</TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Employee Name
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Employee Email
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Casual Leaves
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Sick Leaves
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Paid Leaves
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Pending Leaves
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

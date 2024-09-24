@@ -33,12 +33,14 @@ const LeaveMails = () => {
     getMails();
   }, [fetchMails]);
   return (
-    <section className="bg-white shadow-md rounded p-4">
+    <section className="bg-white rounded-xl shadow  p-4">
       <div className="flex gap-3 pb-2">
         <Link
           href="/admin/mails"
           className={`p-2 border rounded-md active:bg-blue-500 ${
-            !newState ? "bg-black text-white" : "bg-white text-black"
+            !newState
+              ? "bg-[#4b2199] hover:bg-[#6f42c1] text-white"
+              : "bg-white text-black shadow shadow-[#4b2199] border border-[#007bff]"
           }`}
           onClick={() => {
             setNewState(true);
@@ -49,7 +51,9 @@ const LeaveMails = () => {
         <Link
           href="/admin/all-mails"
           className={`p-2 border rounded-md active:bg-blue-500 ${
-            newState ? "bg-black text-white" : "bg-white text-black"
+            newState
+              ? "bg-[#4b2199] hover:bg-[#6f42c1] text-white"
+              : "bg-white text-black shadow shadow-[#4b2199] border border-[#007bff]"
           }`}
           onClick={() => {
             setNewState(false);
@@ -65,17 +69,35 @@ const LeaveMails = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>S.No</TableHead>
-              <TableHead>Employee Name</TableHead>
-              <TableHead>Employee Email</TableHead>
-              <TableHead>Request From</TableHead>
-              <TableHead>Total Days</TableHead>
-              <TableHead>Responsed Date</TableHead>
-              <TableHead>Leave From</TableHead>
-              <TableHead>Leave To</TableHead>
-              <TableHead>Reason for the Leave</TableHead>
-              <TableHead>Reason for the Rejection</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead className="text-[#4b2199] font-bold">S.No</TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Employee Name
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Employee Email
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Request From
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Total Days
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Responsed Date
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Leave From
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Leave To
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Reason for the Leave
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">
+                Reason for the Rejection
+              </TableHead>
+              <TableHead className="text-[#4b2199] font-bold">Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
