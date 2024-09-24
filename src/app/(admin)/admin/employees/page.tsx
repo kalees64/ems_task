@@ -76,7 +76,7 @@ const Employees = () => {
         <h2 className="text-lg font-semibold ">All Employees</h2>
 
         <div
-          className="bg-[#4b2199] hover:bg-[#6f42c1] p-2 rounded text-white flex gap-2 items-center cursor-pointer"
+          className="bg-[#6343d8] hover:bg-[#593cc1] p-2 rounded text-white flex gap-2 items-center cursor-pointer"
           onClick={() => {
             setAdminState(!adminState);
             router.push("/register");
@@ -87,10 +87,10 @@ const Employees = () => {
         </div>
       </div>
       <div className="w-80">
-        <Card className=" shadow shadow-[#4b2199] border border-[#007bff]">
+        <Card className="">
           <CardContent className="flex pt-4">
             <div className="flex flex-col justify-center gap-3 ">
-              <h1>Total Employees</h1>
+              <h1 className="text-[#637085]">Total Employees</h1>
               <h1 className="font-bold text-xl font-sans">{allUsers.length}</h1>
             </div>
             <div className="w-5/12 flex justify-end items-center">
@@ -98,7 +98,7 @@ const Employees = () => {
                 icon="flowbite:users-outline"
                 fontSize={25}
                 className="text-black/50"
-                color="#4b2199"
+                color="#754ffe"
               />
             </div>
           </CardContent>
@@ -109,29 +109,29 @@ const Employees = () => {
 
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead className="text-[#4b2199] font-bold">S.No</TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+            <TableRow className="bg-[#f1f5f9]">
+              <TableHead className="font-bold text-black">S.No</TableHead>
+              <TableHead className="font-bold text-black">
                 Employee Email
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Employee Phone
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Employee Name
               </TableHead>
-              <TableHead className="text-[#4b2199] text-center font-bold">
+              <TableHead className="text-black text-center font-bold">
                 Action
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="text-[#637085]">
             {allUsers.length > 0 ? (
               allUsers.map((user: any, index: number) => {
                 return (
                   <TableRow key={user.id}>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{user.name}</TableCell>
+                    <TableCell className="text-black">{user.name}</TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.phone}</TableCell>
                     <TableCell className="flex items-center gap-3 justify-center">
@@ -142,13 +142,12 @@ const Employees = () => {
                             icon="mage:edit"
                             fontSize={30}
                             className=" cursor-pointer"
-                            color="#4b2199"
                             onClick={async () => {
                               setValues(await getUser(user.id));
                             }}
                           />
                         </DialogTrigger>
-                        <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
+                        <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#754ffe] border border-[#007bff]">
                           <DialogHeader>
                             <h1>Employee Update Form</h1>
                           </DialogHeader>
@@ -199,7 +198,7 @@ const Employees = () => {
                               <input
                                 type="submit"
                                 value="Update"
-                                className="w-full h-10  text-lg bg-[#4b2199] hover:bg-[#6f42c1] rounded cursor-pointer text-white"
+                                className="w-full h-10  text-lg bg-[#754ffe] hover:bg-[#6f42c1] rounded cursor-pointer text-white"
                               />
                             </DialogClose>
                           </form>
@@ -212,10 +211,9 @@ const Employees = () => {
                             icon="ic:baseline-delete-forever"
                             fontSize={30}
                             className="cursor-pointer"
-                            color="#4b2199"
                           />
                         </DialogTrigger>
-                        <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
+                        <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#754ffe] border border-[#007bff]">
                           <DialogHeader>
                             <DialogTitle>
                               Do you want delete {user.name}?
@@ -227,7 +225,7 @@ const Employees = () => {
                           <div className="flex gap-5">
                             <DialogClose asChild>
                               <Button
-                                className="bg-[#4b2199] hover:bg-[#6f42c1]"
+                                className="bg-[#754ffe] hover:bg-[#6f42c1]"
                                 onClick={async () => {
                                   setLoad(true);
                                   const res = await handleDelete(user.id);

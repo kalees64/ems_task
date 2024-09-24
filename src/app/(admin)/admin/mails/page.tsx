@@ -70,8 +70,8 @@ const LeaveMails = () => {
           href="/admin/mails"
           className={`p-2 border rounded-md active:bg-blue-500 ${
             newState
-              ? "bg-[#4b2199] hover:bg-[#6f42c1] text-white"
-              : "bg-white text-black shadow shadow-[#4b2199] border border-[#007bff]"
+              ? "bg-[#6343d8] hover:bg-[#593cc1] text-white"
+              : "bg-white text-black  border border-[#6343d8]"
           }`}
           onClick={() => {
             setNewState(true);
@@ -83,8 +83,8 @@ const LeaveMails = () => {
           href="/admin/all-mails"
           className={`p-2 border rounded-md active:bg-blue-500 ${
             !newState
-              ? "bg-[#4b2199] hover:bg-[#6f42c1] text-white"
-              : "bg-white text-black shadow shadow-[#4b2199] border border-[#007bff]"
+              ? "bg-[#6343d8] hover:bg-[#593cc1] text-white"
+              : "bg-white text-black border border-[#6343d8]"
           }`}
           onClick={() => {
             setNewState(false);
@@ -110,40 +110,35 @@ const LeaveMails = () => {
           <div className="w-full pt-5  max-sm:px-1  pb-4">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="text-[#4b2199] font-bold">
-                    S.no
-                  </TableHead>
-                  <TableHead className="text-[#4b2199] font-bold">
+                <TableRow className="bg-[#f1f5f9]">
+                  <TableHead className="font-bold text-black">S.no</TableHead>
+                  <TableHead className="font-bold text-black">
                     Employee Name
                   </TableHead>
-                  <TableHead className="text-[#4b2199] font-bold">
+                  <TableHead className="font-bold text-black">
                     Employee Email
                   </TableHead>
-                  <TableHead className="text-[#4b2199] font-bold">
+                  <TableHead className="font-bold text-black">
                     Request From
                   </TableHead>
-                  <TableHead className="text-[#4b2199] font-bold">
+                  <TableHead className="font-bold text-black">
                     Total Days
                   </TableHead>
-                  <TableHead className="text-[#4b2199] font-bold">
+                  <TableHead className="font-bold text-black">
                     Leave From
                   </TableHead>
-                  <TableHead className="text-[#4b2199] font-bold">
+                  <TableHead className="font-bold text-black">
                     Leave To
                   </TableHead>
-                  <TableHead className="text-[#4b2199] font-bold">
+                  <TableHead className="font-bold text-black">
                     Reason for the Leave
                   </TableHead>
-                  <TableHead
-                    className="text-[#4b2199] font-bold text-center"
-                    colSpan={2}
-                  >
+                  <TableHead className="font-bold text-center" colSpan={2}>
                     Action
                   </TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody className="text-[#637085]">
                 {newMails.length > 0 ? (
                   newMails.map((mail: any, index: number) => {
                     return (
@@ -152,7 +147,9 @@ const LeaveMails = () => {
                         className={`${mail.new ? null : "hidden"}`}
                       >
                         <TableCell>{index + 1}</TableCell>
-                        <TableCell>{mail.name}</TableCell>
+                        <TableCell className="text-black">
+                          {mail.name}
+                        </TableCell>
                         <TableCell>{mail.email}</TableCell>
                         <TableCell>{mail.created_date}</TableCell>
                         <TableCell className="font-bold">
@@ -187,7 +184,7 @@ const LeaveMails = () => {
                                 }}
                               />
                             </DialogTrigger>
-                            <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
+                            <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#754ffe] border border-[#007bff]">
                               <DialogHeader>
                                 <h1>Email Rejection Form</h1>
                               </DialogHeader>
@@ -234,7 +231,7 @@ const LeaveMails = () => {
                                   <Button
                                     type="submit"
                                     disabled={load}
-                                    className="bg-[#4b2199] hover:bg-[#6f42c1]"
+                                    className="bg-[#754ffe] hover:bg-[#6f42c1]"
                                   >
                                     {load && (
                                       <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2 "></span>

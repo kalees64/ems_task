@@ -31,7 +31,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
         <div className="max-lg:hidden w-64">
           <Sidebar />
         </div>
-        <div className="flex-1 flex flex-col bg-white text-black h-screen w-full overflow-x-scroll">
+        <div className="flex-1 flex flex-col bg-[#f1f5f9] text-black h-screen w-full overflow-x-scroll">
           <Navbar allEmps={allEmps} />
           {/* Birthday wish section */}
           {birUser.length > 0 && (

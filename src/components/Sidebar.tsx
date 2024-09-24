@@ -7,14 +7,14 @@ import React, { useContext } from "react";
 const Sidebar = () => {
   const { side, setSide } = useContext(DataContext);
   return (
-    <div className="h-full w-full bg-[#007bff] text-white flex flex-col space-y-4 p-4 ">
-      <h1 className="text-xl font-bold max-lg:hidden w-full pt-2 ps-10">
+    <div className="h-full w-full bg-[#1e293b] text-white flex flex-col space-y-4 p-4 ">
+      <h1 className="text-xl font-bold max-lg:hidden w-full pt-2 ps-3 cursor-pointer">
         Admin Panel
       </h1>
-      <nav className="flex flex-col space-y-4 pt-2 max-lg:pt-0 max-lg:pb-4">
+      <nav className="flex flex-col space-y-4 pt-2 max-lg:pt-0 max-lg:pb-4 font-semibold">
         <Link
           href="/admin/employees"
-          className="hover:bg-[#0dcaf0] p-2 rounded flex gap-4 items-center"
+          className="text-[#637085] hover:text-[#94A3B8] p-2 rounded flex gap-4 items-center"
           onClick={() => {
             setSide(!side);
           }}
@@ -25,7 +25,7 @@ const Sidebar = () => {
         </Link>
         <Link
           href="/admin"
-          className="hover:bg-[#0dcaf0] p-2 rounded flex gap-4 items-center"
+          className="text-[#637085] hover:text-[#94A3B8] p-2 rounded flex gap-4 items-center"
           onClick={() => {
             setSide(!side);
           }}
@@ -35,7 +35,7 @@ const Sidebar = () => {
         </Link>
         <Link
           href="/admin/mails"
-          className="hover:bg-[#0dcaf0] p-2 rounded flex gap-4 items-center"
+          className="text-[#637085] hover:text-[#94A3B8] p-2 rounded flex gap-4 items-center"
           onClick={() => {
             setSide(!side);
           }}
@@ -46,7 +46,7 @@ const Sidebar = () => {
 
         <Link
           href="/admin/holidays"
-          className="hover:bg-[#0dcaf0] p-2 rounded flex gap-4 items-center"
+          className="text-[#637085] hover:text-[#94A3B8] p-2 rounded flex gap-4 items-center"
           onClick={() => {
             setSide(!side);
           }}

@@ -33,35 +33,35 @@ const Admin = () => {
       <div className="w-full pt-5  max-sm:px-1  relative">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead className="text-[#4b2199] font-bold">S.no</TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+            <TableRow className="bg-[#f1f5f9]">
+              <TableHead className="font-bold text-black">S.no</TableHead>
+              <TableHead className="font-bold text-black">
                 Employee Name
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Employee Email
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Casual Leaves
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Sick Leaves
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Paid Leaves
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Pending Leaves
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="text-[#637085]">
             {allUsers.length > 0 ? (
               allUsers.map((user: any, index: number) => {
                 return (
                   <TableRow key={user.id}>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{user.name}</TableCell>
+                    <TableCell className="text-black">{user.name}</TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{12 - Number(user.casual_leaves)}</TableCell>
                     <TableCell>{12 - Number(user.sick_leaves)}</TableCell>

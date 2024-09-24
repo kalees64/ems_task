@@ -71,6 +71,7 @@ const Holidays = () => {
     setName("");
     setDate("");
     setPublicHoliday(true);
+    setLoad(false);
   };
 
   //Update Holiday Form
@@ -93,6 +94,7 @@ const Holidays = () => {
       toast.success("Holiday Updated");
     }, 100);
     await startup();
+    setLoad(false);
   };
 
   //Delete function
@@ -105,6 +107,7 @@ const Holidays = () => {
       toast.success("Holiday Deleted");
     }, 100);
     await startup();
+    setLoad(false);
   };
 
   //component starter function
@@ -121,18 +124,18 @@ const Holidays = () => {
   return (
     <div>
       <section className="bg-white rounded-xl shadow  p-4 ">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pb-4">
           <h1 className="text-lg font-semibold mb-4 pe-5">Holidays</h1>
           <div>
             {/* Add Holiday Dialog */}
             <Dialog>
               <DialogTrigger asChild>
-                <div className="flex items-center gap-2 p-1.5 rounded-sm cursor-pointer bg-[#4b2199] hover:bg-[#6f42c1]">
+                <div className="flex items-center gap-2 p-1.5 rounded-sm cursor-pointer bg-[#6343d8] hover:bg-[#593cc1]">
                   <Icon icon="zondicons:date-add" fontSize={25} color="white" />
                   <span className="text-white">Add Holiday</span>
                 </div>
               </DialogTrigger>
-              <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
+              <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#754ffe] border border-[#007bff]">
                 <DialogHeader>
                   <DialogTitle>Add Holiday</DialogTitle>
                   <DialogDescription className="hidden">
@@ -179,7 +182,7 @@ const Holidays = () => {
                     <Button
                       type="submit"
                       disabled={load}
-                      className="bg-[#4b2199] hover:bg-[#6f42c1]"
+                      className="bg-[#754ffe] hover:bg-[#6f42c1]"
                     >
                       {load && (
                         <span className="w-5 h-5 border-4 border-t-white border-gray-600 rounded-full animate-spin me-2"></span>
@@ -195,29 +198,27 @@ const Holidays = () => {
         <div className="">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="text-[#4b2199] font-bold">S.No</TableHead>
-                <TableHead className="text-[#4b2199] font-bold">
+              <TableRow className="bg-[#f1f5f9]">
+                <TableHead className="font-bold text-black">S.No</TableHead>
+                <TableHead className="font-bold text-black">
                   Leave Name
                 </TableHead>
-                <TableHead className="text-[#4b2199] font-bold">
+                <TableHead className="font-bold text-black">
                   Leave Date
                 </TableHead>
-                <TableHead className="text-[#4b2199] font-bold">
+                <TableHead className="font-bold text-black">
                   Leave Type
                 </TableHead>
-                <TableHead className="text-[#4b2199] font-bold">
-                  Action
-                </TableHead>
+                <TableHead className="font-bold text-black">Action</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="text-[#637085]">
               {holidays.length > 0 ? (
                 holidays.map((data: any, index) => {
                   return (
                     <TableRow key={data.id}>
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell>{data.name}</TableCell>
+                      <TableCell className="text-black">{data.name}</TableCell>
                       <TableCell>{data.date}</TableCell>
                       <TableCell>
                         {data.publicHoliday
@@ -233,7 +234,6 @@ const Holidays = () => {
                                   icon="material-symbols-light:edit-calendar-outline"
                                   fontSize={30}
                                   className=" cursor-pointer"
-                                  color="#4b2199"
                                   onClick={async () => {
                                     const res = await fetchHolidays();
                                     const findHoliday: any = res.find(
@@ -255,7 +255,7 @@ const Holidays = () => {
                                   }}
                                 />
                               </DialogTrigger>
-                              <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
+                              <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#754ffe] border border-[#007bff]">
                                 <DialogHeader>
                                   <DialogTitle>Update Holiday</DialogTitle>
                                   <DialogDescription className="hidden">
@@ -304,7 +304,7 @@ const Holidays = () => {
                                     <DialogClose asChild>
                                       <Button
                                         type="submit"
-                                        className="bg-[#4b2199] hover:bg-[#6f42c1]"
+                                        className="bg-[#754ffe] hover:bg-[#6f42c1]"
                                       >
                                         update
                                       </Button>
@@ -321,10 +321,9 @@ const Holidays = () => {
                                 icon="ic:baseline-delete-forever"
                                 fontSize={30}
                                 className="cursor-pointer"
-                                color="#4b2199"
                               />
                             </DialogTrigger>
-                            <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#4b2199] border border-[#007bff]">
+                            <DialogContent className="bg-white text-black max-sm:w-11/12 shadow shadow-[#754ffe] border border-[#007bff]">
                               <DialogHeader>
                                 <DialogTitle>
                                   Do you want delete {data.name}?
@@ -336,7 +335,7 @@ const Holidays = () => {
                               <div className="flex gap-5">
                                 <DialogClose asChild>
                                   <Button
-                                    className="bg-[#4b2199] hover:bg-[#6f42c1]"
+                                    className="bg-[#754ffe] hover:bg-[#6f42c1]"
                                     onClick={() => {
                                       setLoad(true);
                                       handleDelete(data.id);

@@ -39,8 +39,8 @@ const LeaveMails = () => {
           href="/admin/mails"
           className={`p-2 border rounded-md active:bg-blue-500 ${
             !newState
-              ? "bg-[#4b2199] hover:bg-[#6f42c1] text-white"
-              : "bg-white text-black shadow shadow-[#4b2199] border border-[#007bff]"
+              ? "bg-[#6343d8] hover:bg-[#593cc1] text-white"
+              : "bg-white text-black  border border-[#6343d8]"
           }`}
           onClick={() => {
             setNewState(true);
@@ -52,8 +52,8 @@ const LeaveMails = () => {
           href="/admin/all-mails"
           className={`p-2 border rounded-md active:bg-blue-500 ${
             newState
-              ? "bg-[#4b2199] hover:bg-[#6f42c1] text-white"
-              : "bg-white text-black shadow shadow-[#4b2199] border border-[#007bff]"
+              ? "bg-[#6343d8] hover:bg-[#593cc1] text-white"
+              : "bg-white text-black border border-[#6343d8]"
           }`}
           onClick={() => {
             setNewState(false);
@@ -68,39 +68,33 @@ const LeaveMails = () => {
       <div className="w-full pt-5  max-sm:px-1 ">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead className="text-[#4b2199] font-bold">S.No</TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+            <TableRow className="bg-[#f1f5f9]">
+              <TableHead className="font-bold text-black">S.No</TableHead>
+              <TableHead className="font-bold text-black">
                 Employee Name
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Employee Email
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Request From
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
-                Total Days
-              </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">Total Days</TableHead>
+              <TableHead className="font-bold text-black">
                 Responsed Date
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
-                Leave From
-              </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
-                Leave To
-              </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">Leave From</TableHead>
+              <TableHead className="font-bold text-black">Leave To</TableHead>
+              <TableHead className="font-bold text-black">
                 Reason for the Leave
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">
+              <TableHead className="font-bold text-black">
                 Reason for the Rejection
               </TableHead>
-              <TableHead className="text-[#4b2199] font-bold">Status</TableHead>
+              <TableHead className="font-bold text-black">Status</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="text-[#637085]">
             {allMails.length > 0 ? (
               allMails.map((mail: any, index: number) => {
                 return (
@@ -109,7 +103,7 @@ const LeaveMails = () => {
                     className={`${!mail.new ? null : "hidden"}`}
                   >
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{mail.name}</TableCell>
+                    <TableCell className="text-black">{mail.name}</TableCell>
                     <TableCell>{mail.email}</TableCell>
                     <TableCell>{mail.created_date}</TableCell>
                     <TableCell>{mail.total_days}</TableCell>
